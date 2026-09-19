@@ -1,0 +1,10 @@
+INSERT INTO "AdminUser" (id, email, password_hash, name, role, "createdAt", "updatedAt")
+VALUES (
+  gen_random_uuid(),
+  'admin@ndegwainvestments.com',
+  '$2b$10$YourBcryptHashedPasswordHere',
+  'System Administrator',
+  'SUPER_ADMIN',
+  NOW(),
+  NOW()
+);

@@ -1,0 +1,196 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model InvestmentCategory {
+  id            String                  @id @default(uuid())
+  name          String                  @unique
+  slug          String                  @unique
+  description   String?
+  active        Boolean                 @default(true)
+  ordering      Int                     @default(0)
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+  opportunities InvestmentOpportunity[]
+
+  @@map("investment_categories")
+}
+
+model InvestmentStatus {
+  id            String                  @id @default(uuid())
+  name          String                  @unique
+  slug          String                  @unique
+  color         String                  @default("emerald")
+  ordering      Int                     @default(0)
+  active        Boolean                 @default(true)
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+  opportunities InvestmentOpportunity[]
+
+  @@map("investment_statuses")
+}
+
+model InvestmentOpportunity {
+  id                    String                   @id @default(uuid())
+  title                 String
+  slug                  String                   @unique
+  categoryId            String
+  statusId              String
+  location              String
+  shortDescription      String                   @db.VarChar(500)
+  fullDescription       String
+  closingDate           DateTime?
+  fundingTarget         Decimal?                 @db.Decimal(15, 2)
+  amountRaised          Decimal?                 @default(0) @db.Decimal(15, 2)
+  minimumInvestment     Decimal?                 @db.Decimal(15, 2)
+  returnType            String
+  returnDescription     String
+  expectedReturn        String?
+  riskLevel             String?
+  duration              String?
+  featured              Boolean                  @default(false)
+  published             Boolean                  @default(false)
+  showFundingTarget     Boolean                  @default(true)
+  showAmountRaised      Boolean                  @default(true)
+  showFundingProgress   Boolean                  @default(true)
+  showMinimumInvestment Boolean                  @default(true)
+  showReturnInformation Boolean                  @default(true)
+  showRisk              Boolean                  @default(true)
+  showDuration          Boolean                  @default(true)
+  showClosingDate       Boolean                  @default(true)
+  showDocuments         Boolean                  @default(true)
+  showLinks             Boolean                  @default(true)
+  metaTitle             String?
+  metaDescription       String?
+  ogImage               String?
+  createdAt             DateTime                 @default(now())
+  updatedAt             DateTime                 @updatedAt
+  contentBlocks         InvestmentContentBlock[]
+  documents             InvestmentDocument[]
+  images                InvestmentImage[]
+  inquiries             InvestmentInquiry[]
+  links                 InvestmentLink[]
+  category              InvestmentCategory       @relation(fields: [categoryId], references: [id])
+  status                InvestmentStatus         @relation(fields: [statusId], references: [id])
+
+  @@index([categoryId])
+  @@index([statusId])
+  @@index([published, featured])
+  @@map("investment_opportunities")
+}
+
+model InvestmentImage {
+  id           String                @id @default(uuid())
+  investmentId String
+  url          String
+  alt          String?
+  caption      String?
+  ordering     Int                   @default(0)
+  createdAt    DateTime              @default(now())
+  investment   InvestmentOpportunity @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+
+  @@index([investmentId])
+  @@map("investment_images")
+}
+
+model InvestmentDocument {
+  id           String                @id @default(uuid())
+  investmentId String
+  title        String
+  description  String?
+  fileUrl      String
+  public       Boolean               @default(true)
+  ordering     Int                   @default(0)
+  createdAt    DateTime              @default(now())
+  investment   InvestmentOpportunity @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+
+  @@index([investmentId])
+  @@map("investment_documents")
+}
+
+model InvestmentLink {
+  id           String                @id @default(uuid())
+  investmentId String
+  title        String
+  url          String
+  description  String?
+  public       Boolean               @default(true)
+  ordering     Int                   @default(0)
+  createdAt    DateTime              @default(now())
+  investment   InvestmentOpportunity @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+
+  @@index([investmentId])
+  @@map("investment_links")
+}
+
+model InvestmentContentBlock {
+  id           String                @id @default(uuid())
+  investmentId String
+  type         String
+  data         Json
+  ordering     Int                   @default(0)
+  createdAt    DateTime              @default(now())
+  investment   InvestmentOpportunity @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+
+  @@index([investmentId])
+  @@map("investment_content_blocks")
+}
+
+model InvestmentInquiry {
+  id                      String                @id @default(uuid())
+  investmentOpportunityId String
+  name                    String
+  email                   String
+  phone                   String
+  amountInterested        Decimal?              @db.Decimal(15, 2)
+  message                 String
+  status                  String                @default("NEW")
+  adminNotes              String?
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  investmentOpportunity   InvestmentOpportunity @relation(fields: [investmentOpportunityId], references: [id])
+
+  @@index([investmentOpportunityId])
+  @@index([status])
+  @@map("investment_inquiries")
+}
+
+model SiteSettings {
+  id                 String   @id @default(uuid())
+  companyName        String   @default("Ndegwa Investments")
+  phone              String   @default("0799357038")
+  internationalPhone String   @default("+254 799 357 038")
+  location           String   @default("Nairobi, Kenya")
+  companyEmail       String?
+  currency           String   @default("KSh")
+  homepageSettings   Json?
+  themeSettings      Json?
+  updatedAt          DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model PageContent {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  content   Json
+  updatedAt DateTime @updatedAt
+
+  @@map("page_contents")
+}
