@@ -1,13 +1,29 @@
 // app/layout.tsx
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans } from 'next/font/google'
+import { Inter, Cormorant_Garamond, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/public/navbar'
 import Footer from '@/components/public/footer'
 
-const jakarta = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500', '600'],
   display: 'swap',
 })
 
@@ -35,8 +51,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${jakarta.variable} h-full`} suppressHydrationWarning>
-      <body className="font-sans antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+    <html
+      lang="en"
+      className={`${inter.variable} ${cormorant.variable} ${plexMono.variable} h-full`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans antialiased bg-[#FBFBF9] text-[#0E0E0E] min-h-screen flex flex-col selection:bg-[#B01E28] selection:text-white">
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />

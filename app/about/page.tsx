@@ -24,179 +24,199 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#faf8f5] dark:bg-[#0a0e17] text-[#0a0e17] dark:text-[#faf8f5] transition-colors duration-500 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-[#FBFBF9] text-[#0E0E0E] overflow-x-hidden antialiased">
 
       {/* =========================================================================
-          GLOBAL STYLES — Fonts, animations, textures
+          GLOBAL STYLES — Institutional Design System
           ========================================================================= */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
-            .font-display { font-family: 'Syne', system-ui, sans-serif; }
-            .font-body { font-family: 'Manrope', system-ui, sans-serif; }
+            .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; font-optical-sizing: auto; }
+            .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+            .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
-            @keyframes revealLine {
-              from { opacity: 0; transform: translateY(20px); }
+            :root {
+              --red: #B01E28;
+              --red-deep: #7A1219;
+              --ink: #0E0E0E;
+              --ink-soft: #1A1A1A;
+              --paper: #FBFBF9;
+              --bone: #F2F0EB;
+              --line: rgba(14,14,14,0.10);
+              --line-strong: rgba(14,14,14,0.20);
+            }
+
+            @keyframes fadeUp {
+              from { opacity: 0; transform: translateY(24px); }
               to { opacity: 1; transform: translateY(0); }
             }
-            @keyframes slideUp {
-              from { transform: translateY(105%); opacity: 0; }
-              to { transform: translateY(0); opacity: 1; }
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
             }
-            @keyframes panBg {
-              0% { background-position: 0% 50%; }
-              50% { background-position: 100% 50%; }
-              100% { background-position: 0% 50%; }
+            @keyframes scaleIn {
+              from { opacity: 0; transform: scale(1.06); }
+              to { opacity: 1; transform: scale(1); }
             }
-            @keyframes slowZoom {
-              0% { transform: scale(1.08); }
-              100% { transform: scale(1); }
+            @keyframes slowPan {
+              0%, 100% { transform: scale(1.05) translate(0, 0); }
+              50% { transform: scale(1.10) translate(-1%, -0.5%); }
             }
-            @keyframes floatBlob {
-              0%, 100% { transform: translate(0, 0) scale(1); }
-              50% { transform: translate(20px, -20px) scale(1.05); }
+            @keyframes drawLineX {
+              from { transform: scaleX(0); }
+              to { transform: scaleX(1); }
             }
-            @keyframes rotateSlow {
-              to { transform: rotate(360deg); }
+            @keyframes blink {
+              0%, 55% { opacity: 1; }
+              56%, 100% { opacity: 0.35; }
             }
-            @keyframes marqueeScroll {
+            @keyframes marqueeSlow {
               0% { transform: translateX(0); }
               100% { transform: translateX(-50%); }
             }
 
-            .anim-reveal { animation: revealLine 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
-            .anim-slide-up { animation: slideUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
-            .anim-pan-bg { animation: panBg 30s ease-in-out infinite; }
-            .anim-slow-zoom { animation: slowZoom 25s ease-in-out infinite alternate; }
-            .anim-float-blob { animation: floatBlob 8s ease-in-out infinite; }
-            .anim-rotate-slow { animation: rotateSlow 20s linear infinite; }
-            .anim-marquee { animation: marqueeScroll 40s linear infinite; }
+            .anim-fade-up { animation: fadeUp 1.1s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-fade-in { animation: fadeIn 1.4s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-scale-in { animation: scaleIn 1.8s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-slow-pan { animation: slowPan 32s ease-in-out infinite; }
+            .anim-blink { animation: blink 2s steps(1) infinite; }
+            .anim-draw-x { animation: drawLineX 1.6s cubic-bezier(0.77,0,0.175,1) both; transform-origin: left; }
+            .anim-marquee-slow { animation: marqueeSlow 90s linear infinite; }
 
-            .delay-100 { animation-delay: 0.1s; }
-            .delay-250 { animation-delay: 0.25s; }
-            .delay-400 { animation-delay: 0.4s; }
-            .delay-600 { animation-delay: 0.6s; }
-            .delay-1000 { animation-delay: 1s; }
+            .d-1 { animation-delay: 0.15s; }
+            .d-2 { animation-delay: 0.30s; }
+            .d-3 { animation-delay: 0.45s; }
+            .d-4 { animation-delay: 0.60s; }
+            .d-5 { animation-delay: 0.75s; }
+            .d-6 { animation-delay: 0.90s; }
 
-            .text-outline {
-              -webkit-text-stroke: 1.5px rgba(250, 248, 245, 0.7);
-              color: transparent;
+            /* Grain */
+            .grain::after {
+              content:'';
+              position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+              opacity: 0.02;
+              background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
             }
 
-            .bg-grid {
-              background-image:
-                linear-gradient(rgba(10, 14, 23, 0.045) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(10, 14, 23, 0.045) 1px, transparent 1px);
-              background-size: 48px 48px;
-            }
-            .bg-grid-light {
-              background-image:
-                linear-gradient(rgba(250, 248, 245, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(250, 248, 245, 0.06) 1px, transparent 1px);
-              background-size: 60px 60px;
+            /* Institutional image treatment */
+            .img-inst { filter: saturate(0.55) contrast(1.02) brightness(0.98); }
+            .img-inst-hero { filter: saturate(0.5) contrast(1.05) brightness(0.88); }
+
+            /* Tracking utilities */
+            .tracking-xxl { letter-spacing: 0.5em; }
+            .tracking-xl { letter-spacing: 0.32em; }
+            .tracking-lg { letter-spacing: 0.20em; }
+
+            /* Institutional label */
+            .label-inst {
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.65rem;
+              letter-spacing: 0.32em;
+              text-transform: uppercase;
+              font-weight: 500;
             }
 
-            .bg-stripes {
-              background-image: repeating-linear-gradient(
-                45deg,
-                rgba(15, 155, 108, 0.06) 0px,
-                rgba(15, 155, 108, 0.06) 2px,
-                transparent 2px,
-                transparent 18px
-              );
-            }
-
-            ::-webkit-scrollbar { width: 8px; height: 8px; }
-            ::-webkit-scrollbar-track { background: transparent; }
-            ::-webkit-scrollbar-thumb { background: rgba(15, 155, 108, 0.3); border-radius: 4px; }
-            ::-webkit-scrollbar-thumb:hover { background: rgba(15, 155, 108, 0.6); }
+            ::-webkit-scrollbar { width: 10px; height: 10px; }
+            ::-webkit-scrollbar-track { background: #FBFBF9; }
+            ::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.22); }
+            ::-webkit-scrollbar-thumb:hover { background: #B01E28; }
           `,
         }}
       />
 
       {/* =========================================================================
-          1. PAGE HEADER — CINEMATIC WITH NAIROBI SKYLINE
+          1. PAGE HEADER — INSTITUTIONAL CORPORATE PROFILE
           ========================================================================= */}
-      <section className="relative pt-40 pb-20 lg:pt-52 lg:pb-28 overflow-hidden bg-[#0a0e17]">
+      <section className="relative bg-[#0E0E0E] text-white overflow-hidden">
 
-        {/* Layer 1: Nairobi skyline */}
+        {/* Background image — corporate architecture */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2200&q=85"
-            alt="Nairobi skyline"
-            className="w-full h-full object-cover opacity-40 anim-slow-zoom"
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2600&q=90"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.22] img-inst-hero anim-slow-pan"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0E0E0E] via-[#0E0E0E]/88 to-[#0E0E0E]/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E] via-transparent to-[#0E0E0E]/40" />
         </div>
 
-        {/* Layer 2: Gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(15,155,108,0.35),transparent_55%),linear-gradient(180deg,rgba(10,14,23,0.7)_0%,rgba(10,14,23,0.95)_100%)] z-[1]" />
+        {/* Content */}
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 pt-32 lg:pt-40 pb-20 lg:pb-28">
+          <div className="grid grid-cols-12 gap-8">
 
-        {/* Layer 3: Corporate grid */}
-        <div
-          className="absolute inset-0 z-[1] opacity-[0.06]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(250,248,245,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(250,248,245,0.6) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
-
-        {/* Layer 4: Floating emerald blob */}
-        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-[120px] pointer-events-none anim-float-blob z-[2]" />
-
-        {/* Layer 5: Emerald top accent line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent z-[2]" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-
-          {/* Top editorial line */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 mb-12 border-b border-white/15 anim-reveal">
-            <div className="flex items-center gap-4 text-emerald-300 text-xs font-semibold tracking-[0.3em] uppercase">
-              <span className="w-10 h-px bg-emerald-300" />
-              Corporate Profile
-            </div>
-            <div className="text-white/50 text-xs tracking-[0.2em] uppercase font-medium flex items-center gap-3">
-              <Award className="w-3.5 h-3.5 text-emerald-300" />
-              Est. Nairobi · East Africa
-            </div>
-          </div>
-
-          {/* Headline */}
-          <div className="max-w-4xl">
-            <h1 className="font-display font-extrabold text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-[-0.045em] mb-8">
-              <span className="block overflow-hidden">
-                <span className="inline-block anim-slide-up">About</span>
-              </span>
-              <span className="block overflow-hidden">
-                <span className="inline-block anim-slide-up delay-250">
-                  <span className="text-outline">Ndegwa</span>{' '}
-                  <em className="italic font-normal text-emerald-300">Investments.</em>
+            {/* Left — the statement */}
+            <div className="col-span-12 lg:col-span-8">
+              <div className="flex items-center gap-4 mb-10 anim-fade-up">
+                <span className="w-12 h-px bg-[#B01E28]" />
+                <span className="label-inst text-white/60">
+                  Corporate Profile · Est. 2016 · Nairobi
                 </span>
-              </span>
-            </h1>
+              </div>
 
-            <p className="text-lg lg:text-xl text-white/75 leading-relaxed font-light max-w-2xl anim-reveal delay-600">
-              Headquartered in Nairobi, Kenya, Ndegwa Investments is a specialized investment-opportunity presentation and lead-generation platform connecting qualified capital with high-potential commercial ventures.
-            </p>
+              <h1 className="font-serif font-light text-white text-[2.75rem] sm:text-[4rem] lg:text-[5.5rem] leading-[1.02] tracking-[-0.02em] mb-12 max-w-[22ch]">
+                <span className="block anim-fade-up d-1">About</span>
+                <span className="block anim-fade-up d-2">
+                  Ndegwa <em className="italic font-normal text-[#B01E28]">Investments</em>.
+                </span>
+              </h1>
+
+              <p className="text-lg lg:text-xl text-white/70 leading-[1.75] font-light max-w-[56ch] anim-fade-up d-4">
+                Headquartered in Nairobi, Kenya, Ndegwa Investments is a specialized investment-opportunity presentation and lead-generation platform connecting qualified capital with high-potential commercial ventures.
+              </p>
+            </div>
+
+            {/* Right — key facts panel */}
+            <div className="col-span-12 lg:col-span-4 lg:border-l lg:border-white/15 lg:pl-16 flex flex-col justify-end anim-fade-in d-6">
+              <div className="mb-6">
+                <span className="label-inst text-white/45 block mb-3">Corporate Record</span>
+                <span className="w-8 h-px bg-[#B01E28] block" />
+              </div>
+
+              <div className="flex flex-col">
+                {[
+                  { k: 'Legal Form', v: 'Private Ltd' },
+                  { k: 'Headquarters', v: 'Nairobi, KE' },
+                  { k: 'Founded', v: '2016' },
+                  { k: 'Focus', v: 'East Africa' },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-baseline justify-between py-5 border-b border-white/12 last:border-b-0"
+                  >
+                    <span className="label-inst text-white/50">{item.k}</span>
+                    <span className="font-serif text-lg text-white">{item.v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Quick stats bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-14 pt-8 border-t border-white/15 anim-reveal delay-1000">
+      {/* =========================================================================
+          2. KEY METRICS STRIP
+          ========================================================================= */}
+      <section className="bg-[#FBFBF9] border-b border-[var(--line)]">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-[var(--line)]">
             {[
-              { value: 'KSh 2.4B+', label: 'Vetted Pipeline' },
-              { value: '100%', label: 'Rigorous Underwriting' },
-              { value: 'Nairobi', label: 'Headquartered' },
-              { value: '10+', label: 'Years Advisory' },
-            ].map((stat, i) => (
-              <div key={i} className="flex flex-col gap-1">
-                <span className="font-display text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  {stat.value}
+              { v: 'KSh 2.4B+', k: 'Vetted Pipeline' },
+              { v: '100%', k: 'Rigorous Underwriting' },
+              { v: '03', k: 'Core Sectors' },
+              { v: '10+', k: 'Years Advisory' },
+            ].map((s, i) => (
+              <div
+                key={i}
+                className="py-10 px-6 lg:px-8 anim-fade-up"
+                style={{ animationDelay: `${0.1 + i * 0.1}s` }}
+              >
+                <span className="font-serif text-3xl lg:text-[2.25rem] font-light text-[#0E0E0E] block mb-3 tracking-[-0.02em]">
+                  {s.v}
                 </span>
-                <span className="text-[0.65rem] uppercase tracking-[0.15em] text-white/45 font-medium">
-                  {stat.label}
-                </span>
+                <span className="label-inst text-[#0E0E0E]/45">{s.k}</span>
               </div>
             ))}
           </div>
@@ -204,16 +224,16 @@ export default function AboutPage() {
       </section>
 
       {/* =========================================================================
-          2. MARQUEE STRIP — CONTINUITY WITH HOMEPAGE
+          3. MARQUEE STRIP — INSTITUTIONAL VALUES
           ========================================================================= */}
-      <div className="bg-[#0a0e17] text-[#faf8f5] py-5 overflow-hidden border-y border-white/10">
-        <div className="flex gap-16 whitespace-nowrap anim-marquee w-max">
+      <div className="bg-[#0E0E0E] text-white border-b border-white/10 py-5 overflow-hidden">
+        <div className="flex whitespace-nowrap anim-marquee-slow w-max label-inst text-white/40">
           {[0, 1].map((dup) => (
-            <div key={dup} className="flex gap-16 items-center">
-              {['Integrity', 'Transparency', 'Rigour', 'Partnership', 'Long-Term Value'].map((item) => (
-                <span key={item} className="font-display text-xl sm:text-2xl font-semibold tracking-tight text-white/85 flex items-center gap-16">
-                  {item}
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <div key={dup} className="flex items-center">
+              {['Integrity', 'Transparency', 'Rigour', 'Partnership', 'Long-Term Value', 'East Africa', 'Nairobi'].map((item) => (
+                <span key={item} className="flex items-center">
+                  <span className="px-10">{item}</span>
+                  <span className="w-1 h-1 rounded-full bg-[#B01E28]" />
                 </span>
               ))}
             </div>
@@ -222,250 +242,245 @@ export default function AboutPage() {
       </div>
 
       {/* =========================================================================
-          3. MISSION & PURPOSE — SPLIT EDITORIAL WITH STRATEGY BACKDROP
+          4. MISSION & PURPOSE — SPLIT EDITORIAL
           ========================================================================= */}
-      <section className="relative py-24 lg:py-32 bg-[#faf8f5] dark:bg-[#0a0e17] overflow-hidden">
+      <section className="relative bg-[#FBFBF9] py-24 lg:py-40 border-b border-[var(--line)] overflow-hidden">
 
-        {/* Strategy backdrop */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.07] dark:opacity-[0.09] bg-cover bg-center anim-pan-bg"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        {/* Ghosted strategy image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.035] img-inst anim-slow-pan"
+          />
+        </div>
 
-        {/* Corporate grid */}
-        <div className="absolute inset-0 z-[1] bg-grid opacity-60 dark:opacity-30" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10">
 
-        {/* Gradient fade */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#faf8f5]/95 via-[#faf8f5]/85 to-[#faf8f5]/95 dark:from-[#0a0e17]/95 dark:via-[#0a0e17]/85 dark:to-[#0a0e17]/95" />
-
-        {/* Emerald radial */}
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none z-[1]" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-
-          {/* Section head */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-16 mb-16 lg:mb-20">
-            <div className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-[0.3em] uppercase">
-              <span className="w-6 h-px bg-emerald-600 dark:bg-emerald-400" />
-              Our Foundation
+          {/* Section header */}
+          <div className="grid grid-cols-12 gap-8 mb-20 items-end">
+            <div className="col-span-12 lg:col-span-3">
+              <span className="label-inst text-[#0E0E0E]/45 block mb-4">01 — Foundation</span>
+              <span className="w-10 h-px bg-[#B01E28] block" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05] text-[#0a0e17] dark:text-[#faf8f5]">
-              A Platform Built on{' '}
-              <em className="italic font-normal text-emerald-600 dark:text-emerald-400">Discipline</em> and Clarity.
-            </h2>
+            <div className="col-span-12 lg:col-span-9">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.05] tracking-[-0.02em] text-[#0E0E0E] max-w-[24ch] anim-fade-up">
+                A platform built on <em className="italic font-normal text-[#B01E28]">discipline</em> and clarity.
+              </h2>
+            </div>
           </div>
 
-          {/* Two column — Mission + Standards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Two-card grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
 
-            {/* Mission */}
-            <div className="group relative p-10 lg:p-12 rounded-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-[#e8e4dc] dark:border-white/10 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_rgba(15,155,108,0.2)] hover:border-emerald-500/40 overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-0" />
+            {/* Mission card */}
+            <article className="group relative bg-white border border-[var(--line)] p-10 lg:p-14 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)] anim-fade-up">
+              {/* Red hairline top */}
+              <div className="absolute top-0 left-0 w-16 h-px bg-[#B01E28] group-hover:w-32 transition-all duration-700" />
 
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20 mb-6 relative">
-                  <Target className="w-6 h-6 relative z-10" />
-                  <span className="absolute inset-0 rounded-2xl border border-dashed border-emerald-600/30 anim-rotate-slow" />
+              <div className="flex items-start justify-between mb-10">
+                <div className="w-14 h-14 border border-[#0E0E0E] flex items-center justify-center text-[#0E0E0E]">
+                  <Target className="w-5 h-5" strokeWidth={1.5} />
                 </div>
-
-                <span className="block font-display text-xs font-semibold text-[#8a8577] dark:text-white/40 tracking-[0.2em] mb-4">
+                <span className="font-mono text-[0.7rem] text-[#0E0E0E]/35">
                   / 01
                 </span>
-
-                <h3 className="font-display text-2xl lg:text-3xl font-bold tracking-[-0.025em] leading-tight text-[#0a0e17] dark:text-[#faf8f5] mb-4">
-                  Our Core Purpose
-                </h3>
-
-                <p className="text-[0.95rem] text-[#5a5750] dark:text-slate-400 leading-relaxed">
-                  We bridge the information gap between project sponsors and discerning investors. By providing rigorous transparency, detailed documentation, and structured opportunity presentations, we facilitate meaningful capital partnerships.
-                </p>
-
-                {/* Mini feature list */}
-                <div className="flex flex-col gap-2 mt-6 pt-6 border-t border-[#e8e4dc] dark:border-white/10">
-                  {['Detailed opportunity documentation', 'Structured investor presentations', 'Direct sponsor consultation'].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm text-[#5a5750] dark:text-slate-400">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
               </div>
-            </div>
 
-            {/* Standards */}
-            <div className="group relative p-10 lg:p-12 rounded-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-[#e8e4dc] dark:border-white/10 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_rgba(15,155,108,0.2)] hover:border-emerald-500/40 overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 group-hover:opacity-100 opacity-0" />
+              <h3 className="font-serif text-[1.75rem] lg:text-[2.25rem] font-normal tracking-[-0.01em] text-[#0E0E0E] leading-[1.15] mb-5 max-w-[22ch]">
+                Our core purpose
+              </h3>
 
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20 mb-6 relative">
-                  <ShieldCheck className="w-6 h-6 relative z-10" />
-                  <span className="absolute inset-0 rounded-2xl border border-dashed border-emerald-600/30 anim-rotate-slow" />
+              <p className="text-[0.95rem] leading-[1.85] text-[#0E0E0E]/65 mb-8">
+                We bridge the information gap between project sponsors and discerning investors. By providing rigorous transparency, detailed documentation, and structured opportunity presentations, we facilitate meaningful capital partnerships.
+              </p>
+
+              {/* Feature list */}
+              <div className="flex flex-col border-t border-[var(--line)] pt-6">
+                {[
+                  'Detailed opportunity documentation',
+                  'Structured investor presentations',
+                  'Direct sponsor consultation',
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-4 py-3.5 border-b border-[var(--line)] last:border-b-0"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-[#B01E28] flex-shrink-0" strokeWidth={1.5} />
+                    <span className="text-sm text-[#0E0E0E]/75">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            {/* Standards card */}
+            <article
+              className="group relative bg-white border border-[var(--line)] p-10 lg:p-14 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)] anim-fade-up d-2"
+            >
+              {/* Red hairline top */}
+              <div className="absolute top-0 left-0 w-16 h-px bg-[#B01E28] group-hover:w-32 transition-all duration-700" />
+
+              <div className="flex items-start justify-between mb-10">
+                <div className="w-14 h-14 border border-[#0E0E0E] flex items-center justify-center text-[#0E0E0E]">
+                  <ShieldCheck className="w-5 h-5" strokeWidth={1.5} />
                 </div>
-
-                <span className="block font-display text-xs font-semibold text-[#8a8577] dark:text-white/40 tracking-[0.2em] mb-4">
+                <span className="font-mono text-[0.7rem] text-[#0E0E0E]/35">
                   / 02
                 </span>
-
-                <h3 className="font-display text-2xl lg:text-3xl font-bold tracking-[-0.025em] leading-tight text-[#0a0e17] dark:text-[#faf8f5] mb-4">
-                  Rigorous Standards
-                </h3>
-
-                <p className="text-[0.95rem] text-[#5a5750] dark:text-slate-400 leading-relaxed">
-                  We maintain strict adherence to professional presentation standards. We do not engage in brokerage, forex trading, or payment processing—our focus remains strictly on high-quality opportunity presentation.
-                </p>
-
-                {/* Mini feature list */}
-                <div className="flex flex-col gap-2 mt-6 pt-6 border-t border-[#e8e4dc] dark:border-white/10">
-                  {['No brokerage or forex trading', 'No payment processing', 'Presentation-focused platform'].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm text-[#5a5750] dark:text-slate-400">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
               </div>
-            </div>
+
+              <h3 className="font-serif text-[1.75rem] lg:text-[2.25rem] font-normal tracking-[-0.01em] text-[#0E0E0E] leading-[1.15] mb-5 max-w-[22ch]">
+                Rigorous standards
+              </h3>
+
+              <p className="text-[0.95rem] leading-[1.85] text-[#0E0E0E]/65 mb-8">
+                We maintain strict adherence to professional presentation standards. We do not engage in brokerage, forex trading, or payment processing — our focus remains strictly on high-quality opportunity presentation.
+              </p>
+
+              <div className="flex flex-col border-t border-[var(--line)] pt-6">
+                {[
+                  'No brokerage or forex trading',
+                  'No payment processing',
+                  'Presentation-focused platform',
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-4 py-3.5 border-b border-[var(--line)] last:border-b-0"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-[#B01E28] flex-shrink-0" strokeWidth={1.5} />
+                    <span className="text-sm text-[#0E0E0E]/75">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          4. OUR APPROACH — DARK EDITORIAL WITH FINANCIAL BACKDROP
+          5. OUR APPROACH — DARK INSTITUTIONAL
           ========================================================================= */}
-      <section className="relative py-24 lg:py-32 bg-[#0a0e17] text-[#faf8f5] overflow-hidden">
+      <section className="relative bg-[#0E0E0E] text-white border-b border-white/10 overflow-hidden">
 
-        {/* Financial backdrop */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.08] bg-cover bg-center anim-pan-bg"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        {/* Ghosted financial backdrop */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.08] img-inst anim-slow-pan"
+          />
+        </div>
 
-        {/* Corporate grid overlay */}
-        <div className="absolute inset-0 z-[1] bg-grid-light opacity-60" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 py-24 lg:py-40">
 
-        {/* Radial emerald glow */}
-        <div className="absolute top-0 -left-1/4 w-[60%] h-full bg-[radial-gradient(ellipse_at_center,rgba(15,155,108,0.18),transparent_60%)] pointer-events-none z-[1]" />
-
-        {/* Bottom emerald glow */}
-        <div className="absolute -bottom-40 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none z-[1]" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-
-          {/* Section head */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-16 mb-16">
-            <div className="flex items-center gap-3 text-emerald-300 text-xs font-bold tracking-[0.3em] uppercase">
-              <span className="w-6 h-px bg-emerald-300" />
-              Our Approach
+          {/* Header */}
+          <div className="grid grid-cols-12 gap-8 mb-20 items-end">
+            <div className="col-span-12 lg:col-span-3">
+              <span className="label-inst text-white/45 block mb-4">02 — Approach</span>
+              <span className="w-10 h-px bg-[#B01E28] block" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05]">
-              Three Principles that{' '}
-              <em className="italic font-normal text-emerald-300">Guide</em> Everything We Do.
-            </h2>
+            <div className="col-span-12 lg:col-span-9">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.05] tracking-[-0.02em] text-white max-w-[26ch] anim-fade-up">
+                Three principles that <em className="italic font-normal text-[#B01E28]">guide</em> everything we do.
+              </h2>
+            </div>
           </div>
 
-          {/* Principle grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Principles grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-t border-white/12">
             {[
               {
                 icon: Globe,
                 num: '01',
-                title: 'Local Roots, Global Reach',
+                title: 'Local roots, global reach',
                 desc: 'Anchored in Nairobi with deep regional networks across Kenya, we connect East African enterprises with qualified domestic and international capital.',
               },
               {
                 icon: Lock,
                 num: '02',
-                title: 'Verified Documentation',
+                title: 'Verified documentation',
                 desc: 'Every opportunity presented on our platform is supported by complete financial records, legal verification, and transparent risk disclosure.',
               },
               {
                 icon: TrendingUp,
                 num: '03',
-                title: 'Long-Term Value Focus',
+                title: 'Long-term value focus',
                 desc: 'We prioritise sustainable ventures in agriculture, commercial development, and real estate that deliver reliable yields over short-term speculation.',
               },
             ].map((item, idx) => (
-              <div
+              <article
                 key={idx}
-                className="group relative rounded-3xl bg-white/[0.04] backdrop-blur-sm border border-white/10 p-8 flex flex-col overflow-hidden transition-all duration-700 hover:-translate-y-1.5 hover:border-emerald-400/40 hover:bg-white/[0.07]"
+                className={`group relative py-12 lg:py-16 ${
+                  idx < 2 ? 'lg:border-r border-white/12' : ''
+                } ${idx < 2 ? 'border-b lg:border-b-0 border-white/12' : ''} ${
+                  idx === 0 ? 'lg:pr-12' : idx === 1 ? 'lg:px-12' : 'lg:pl-12'
+                }`}
               >
-                {/* Hover glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(52,211,153,0.1),transparent_40%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-400/10 border border-emerald-400/25 flex items-center justify-center text-emerald-300 relative">
-                      <item.icon className="w-5 h-5 relative z-10" />
-                      <span className="absolute inset-0 rounded-2xl border border-dashed border-emerald-400/30 anim-rotate-slow" />
-                    </div>
-                    <span className="font-display text-xs font-semibold tracking-[0.2em] text-white/30">
-                      / {item.num}
-                    </span>
-                  </div>
-
-                  <h3 className="font-display text-xl font-bold tracking-[-0.02em] leading-tight text-white mb-4 transition-colors duration-300 group-hover:text-emerald-300">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm text-white/60 leading-relaxed">
-                    {item.desc}
-                  </p>
+                {/* Number + icon */}
+                <div className="flex items-baseline justify-between mb-10">
+                  <span className="font-serif text-6xl lg:text-7xl font-light text-[#B01E28] leading-none">
+                    {item.num}
+                  </span>
+                  <item.icon className="w-6 h-6 text-white/40" strokeWidth={1.25} />
                 </div>
-              </div>
+
+                <h3 className="font-serif text-2xl lg:text-[1.75rem] font-normal tracking-[-0.01em] text-white leading-[1.2] mb-5 max-w-[22ch]">
+                  {item.title}
+                </h3>
+
+                <p className="text-[0.95rem] leading-[1.8] text-white/60 font-light">
+                  {item.desc}
+                </p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          5. WHAT WE ARE NOT — CLARITY SECTION (Corporate transparency)
+          6. SCOPE OF ENGAGEMENT — WHAT WE DO / DON'T
           ========================================================================= */}
-      <section className="relative py-24 lg:py-32 bg-[#f5f0e8] dark:bg-[#0a0e17] overflow-hidden">
+      <section className="relative bg-[#F2F0EB] border-b border-[var(--line)] overflow-hidden">
 
-        {/* Executive backdrop */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.08] bg-cover bg-center anim-pan-bg"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        {/* Ghosted executive image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.04] img-inst anim-slow-pan"
+          />
+        </div>
 
-        {/* Diagonal stripes */}
-        <div className="absolute inset-0 z-[1] bg-stripes opacity-40 dark:opacity-30" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
 
-        {/* Gradient fade */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#f5f0e8]/95 via-[#f5f0e8]/88 to-[#f5f0e8]/95 dark:from-[#0a0e17]/95 dark:via-[#0a0e17]/88 dark:to-[#0a0e17]/95" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-16 mb-16">
-            <div className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-[0.3em] uppercase">
-              <span className="w-6 h-px bg-emerald-600 dark:bg-emerald-400" />
-              Scope of Engagement
+          {/* Header */}
+          <div className="grid grid-cols-12 gap-8 mb-20 items-end">
+            <div className="col-span-12 lg:col-span-3">
+              <span className="label-inst text-[#0E0E0E]/45 block mb-4">03 — Scope</span>
+              <span className="w-10 h-px bg-[#B01E28] block" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05] text-[#0a0e17] dark:text-[#faf8f5]">
-              What We <em className="italic font-normal text-emerald-600 dark:text-emerald-400">Do</em> — and What We Don't.
-            </h2>
+            <div className="col-span-12 lg:col-span-9">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.05] tracking-[-0.02em] text-[#0E0E0E] max-w-[24ch] anim-fade-up">
+                What we <em className="italic font-normal text-[#B01E28]">do</em> — and what we don't.
+              </h2>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Two-panel grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
 
             {/* What we do */}
-            <div className="rounded-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-[#e8e4dc] dark:border-white/10 p-10 lg:p-12 transition-all duration-500 hover:border-emerald-500/40">
-              <div className="flex items-center gap-3 mb-8">
-                <span className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                  <CheckCircle2 className="w-5 h-5" />
+            <div className="bg-white border border-[var(--line)] p-10 lg:p-14 anim-fade-up">
+              <div className="flex items-center gap-5 mb-10 pb-8 border-b border-[var(--line)]">
+                <span className="w-12 h-12 border border-[#B01E28] flex items-center justify-center text-[#B01E28]">
+                  <CheckCircle2 className="w-5 h-5" strokeWidth={1.5} />
                 </span>
-                <h3 className="font-display text-2xl font-bold tracking-[-0.025em] text-[#0a0e17] dark:text-[#faf8f5]">
-                  What We Do
-                </h3>
+                <div>
+                  <span className="label-inst text-[#0E0E0E]/45 block mb-1">Scope</span>
+                  <h3 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal tracking-[-0.01em] text-[#0E0E0E]">
+                    What we do
+                  </h3>
+                </div>
               </div>
 
               <div className="flex flex-col">
@@ -477,10 +492,10 @@ export default function AboutPage() {
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="group flex items-center gap-4 py-4 border-b border-[#e8e4dc] dark:border-white/10 last:border-b-0 transition-all duration-300 hover:pl-2"
+                    className="group flex items-center gap-5 py-5 border-b border-[var(--line)] last:border-b-0 transition-all duration-500 hover:pl-2"
                   >
-                    <item.icon className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                    <span className="text-sm text-[#0a0e17] dark:text-[#faf8f5] font-medium">
+                    <item.icon className="w-4 h-4 text-[#B01E28] flex-shrink-0" strokeWidth={1.5} />
+                    <span className="text-sm text-[#0E0E0E]/85">
                       {item.text}
                     </span>
                   </div>
@@ -489,14 +504,17 @@ export default function AboutPage() {
             </div>
 
             {/* What we don't do */}
-            <div className="rounded-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-[#e8e4dc] dark:border-white/10 p-10 lg:p-12 transition-all duration-500 hover:border-[#c9a961]/50">
-              <div className="flex items-center gap-3 mb-8">
-                <span className="w-10 h-10 rounded-xl bg-[#c9a961]/10 border border-[#c9a961]/25 flex items-center justify-center text-[#c9a961]">
-                  <Lock className="w-5 h-5" />
+            <div className="bg-white border border-[var(--line)] p-10 lg:p-14 anim-fade-up d-2">
+              <div className="flex items-center gap-5 mb-10 pb-8 border-b border-[var(--line)]">
+                <span className="w-12 h-12 border border-[#0E0E0E]/25 flex items-center justify-center text-[#0E0E0E]/60">
+                  <Lock className="w-5 h-5" strokeWidth={1.5} />
                 </span>
-                <h3 className="font-display text-2xl font-bold tracking-[-0.025em] text-[#0a0e17] dark:text-[#faf8f5]">
-                  What We Don't Do
-                </h3>
+                <div>
+                  <span className="label-inst text-[#0E0E0E]/45 block mb-1">Boundary</span>
+                  <h3 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal tracking-[-0.01em] text-[#0E0E0E]">
+                    What we don't do
+                  </h3>
+                </div>
               </div>
 
               <div className="flex flex-col">
@@ -508,10 +526,10 @@ export default function AboutPage() {
                 ].map((text, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-4 py-4 border-b border-[#e8e4dc] dark:border-white/10 last:border-b-0 transition-all duration-300 hover:pl-2"
+                    className="flex items-center gap-5 py-5 border-b border-[var(--line)] last:border-b-0 transition-all duration-500 hover:pl-2"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#c9a961] flex-shrink-0" />
-                    <span className="text-sm text-[#5a5750] dark:text-slate-400 font-medium">
+                    <span className="w-1.5 h-1.5 bg-[#0E0E0E]/40 flex-shrink-0" />
+                    <span className="text-sm text-[#0E0E0E]/60">
                       {text}
                     </span>
                   </div>
@@ -523,71 +541,173 @@ export default function AboutPage() {
       </section>
 
       {/* =========================================================================
-          6. CTA — FINAL CONVERSION BAND
+          7. CTA — CONVERSION BAND
           ========================================================================= */}
-      <section className="relative py-24 lg:py-28 overflow-hidden bg-[#0a0e17] text-[#faf8f5]">
+      <section className="relative bg-[#0E0E0E] text-white overflow-hidden">
 
-        {/* Skyline silhouette */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.12] bg-cover bg-bottom"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        {/* Skyline backdrop */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=2400&q=85"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.20] img-inst-hero anim-slow-pan"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0E0E0E] via-[#0E0E0E]/85 to-[#0E0E0E]/55" />
+        </div>
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e17]/95 via-[#0a0e17]/85 to-[#0a0e17]/95 z-[1]" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+          <div className="grid grid-cols-12 gap-8 items-end">
 
-        {/* Emerald glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-emerald-500/15 rounded-full blur-[140px] pointer-events-none z-[1]" />
+            {/* Left — headline */}
+            <div className="col-span-12 lg:col-span-7">
+              <div className="flex items-center gap-4 mb-10 anim-fade-up">
+                <span className="label-inst text-white/45">04 — Next Steps</span>
+                <span className="w-10 h-px bg-[#B01E28]" />
+              </div>
 
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10 text-center">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[4rem] leading-[1.05] tracking-[-0.02em] text-white max-w-[20ch] mb-8 anim-fade-up d-1">
+                Ready to explore <em className="italic font-normal text-[#B01E28]">active</em> opportunities?
+              </h2>
 
-          <div className="inline-flex items-center gap-3 text-emerald-300 text-xs font-bold tracking-[0.3em] uppercase mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            Ready to Explore
-          </div>
+              <p className="text-lg leading-[1.75] text-white/70 font-light max-w-lg mb-0 anim-fade-up d-3">
+                Browse our current catalog of verified investment opportunities across real estate, agriculture, and commercial sectors in Kenya.
+              </p>
+            </div>
 
-          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05] mb-6">
-            Ready to Explore{' '}
-            <em className="italic font-normal text-emerald-300">Active</em> Opportunities?
-          </h2>
+            {/* Right — CTA buttons */}
+            <div className="col-span-12 lg:col-span-5 lg:pl-16 lg:border-l lg:border-white/15 anim-fade-in d-5">
+              <span className="label-inst text-white/45 block mb-8">Engage</span>
 
-          <p className="text-base lg:text-lg text-white/65 max-w-2xl mx-auto leading-relaxed mb-10">
-            Browse our current catalog of verified investment opportunities across real estate, agriculture, and commercial sectors in Kenya.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/investments"
-              className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full bg-emerald-600 hover:bg-emerald-400 text-white font-semibold text-sm transition-all duration-500 shadow-[0_15px_30px_-10px_rgba(15,155,108,0.6)] hover:shadow-[0_25px_40px_-12px_rgba(52,211,153,0.7)] hover:-translate-y-1 group"
-            >
-              Browse Opportunities
-              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center transition-transform duration-500 group-hover:translate-x-1 group-hover:-rotate-45">
-                <ArrowRight className="w-3.5 h-3.5" />
-              </span>
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-7 py-4 rounded-full border border-white/30 text-white font-semibold text-sm transition-all duration-500 hover:bg-white/10 hover:border-white backdrop-blur-sm"
-            >
-              Schedule a Consultation
-            </Link>
+              <div className="flex flex-col gap-0">
+                <Link
+                  href="/investments"
+                  className="group flex items-center justify-between gap-6 bg-[#B01E28] hover:bg-white hover:text-[#0E0E0E] text-white label-inst px-8 py-5 transition-colors duration-500"
+                >
+                  <span>Browse Opportunities</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="group flex items-center justify-between gap-6 border border-white/30 hover:border-white text-white label-inst px-8 py-5 transition-colors duration-500 border-t-0"
+                >
+                  <span>Schedule Consultation</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          7. FOOTER STRIP
+          8. FOOTER — INSTITUTIONAL MASTHEAD
           ========================================================================= */}
-      <footer className="bg-[#0a0e17] text-white/40 py-10 text-center text-xs tracking-[0.05em] border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <span>© 2026 Ndegwa Investments · Curated Capital for Considered Growth</span>
-          <span className="flex items-center gap-2">
-            <MapPin className="w-3 h-3 text-emerald-300" />
-            <span className="text-emerald-300">Nairobi, Kenya</span>
-          </span>
+      <footer className="bg-[#0E0E0E] text-white border-t border-white/10">
+
+        {/* Top marquee */}
+        <div className="border-b border-white/10 py-5 overflow-hidden">
+          <div className="flex whitespace-nowrap anim-marquee-slow w-max label-inst text-white/30">
+            {[0, 1].map((dup) => (
+              <div key={dup} className="flex items-center">
+                {['Private Capital', 'Real Estate', 'Agriculture', 'Commercial', 'East Africa', 'Nairobi', 'MMXXVI'].map((item) => (
+                  <span key={item} className="flex items-center">
+                    <span className="px-10">{item}</span>
+                    <span className="w-1 h-1 rounded-full bg-[#B01E28]" />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Masthead */}
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-16 lg:py-20">
+          <div className="grid grid-cols-12 gap-8 lg:gap-16">
+
+            {/* Wordmark block */}
+            <div className="col-span-12 lg:col-span-5">
+              <span className="font-serif text-3xl lg:text-[2.5rem] font-normal tracking-tight text-white block mb-6">
+                Ndegwa Investments
+              </span>
+              <p className="text-sm leading-[1.8] text-white/50 max-w-md mb-8">
+                A Nairobi-based private investment firm. Curated capital for considered growth across real estate, agriculture, and commercial sectors in Kenya.
+              </p>
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+                <span className="label-inst text-white/45">
+                  Vol. 01 · MMXXVI
+                </span>
+              </div>
+            </div>
+
+            {/* Nav columns */}
+            <div className="col-span-12 lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
+              <div>
+                <span className="label-inst text-white/45 block mb-6">Firm</span>
+                <ul className="flex flex-col gap-4">
+                  {[
+                    { l: 'Home', h: '/' },
+                    { l: 'About', h: '/about' },
+                    { l: 'Contact', h: '/contact' },
+                  ].map((item) => (
+                    <li key={item.l}>
+                      <Link href={item.h} className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
+                        {item.l}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <span className="label-inst text-white/45 block mb-6">Platform</span>
+                <ul className="flex flex-col gap-4">
+                  {[
+                    { l: 'Opportunities', h: '/investments' },
+                    { l: 'Process', h: '/about' },
+                    { l: 'Standards', h: '/about' },
+                  ].map((item) => (
+                    <li key={item.l}>
+                      <Link href={item.h} className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
+                        {item.l}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <span className="label-inst text-white/45 block mb-6">Contact</span>
+                <ul className="flex flex-col gap-4">
+                  <li>
+                    <a href="tel:+254799357038" className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
+                      +254 799 357 038
+                    </a>
+                  </li>
+                  <li>
+                    <a href="mailto:advisory@ndegwainvestments.com" className="text-sm text-white/70 hover:text-[#B01E28] transition-colors break-all">
+                      advisory@ndegwainvestments.com
+                    </a>
+                  </li>
+                  <li className="text-sm text-white/50">
+                    Nairobi, Kenya
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/10">
+          <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <span className="label-inst text-white/35">
+              © 2026 Ndegwa Investments — All rights reserved
+            </span>
+            <div className="flex items-center gap-6 label-inst text-white/35">
+              <span>Nairobi · 01°17'S 36°49'E</span>
+              <span className="w-px h-3 bg-white/15" />
+              <span>EN</span>
+            </div>
+          </div>
         </div>
       </footer>
 

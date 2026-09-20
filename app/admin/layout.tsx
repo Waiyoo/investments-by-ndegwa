@@ -19,50 +19,161 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ]
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row">
-      {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0">
+    <div className="min-h-screen bg-[#FBFBF9] text-[#0E0E0E] flex flex-col lg:flex-row overflow-x-hidden antialiased">
+
+      {/* =========================================================================
+          GLOBAL STYLES — Institutional Admin System
+          ========================================================================= */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+            .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; font-optical-sizing: auto; }
+            .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+            .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+            :root {
+              --red: #B01E28;
+              --red-deep: #7A1219;
+              --ink: #0E0E0E;
+              --ink-soft: #1A1A1A;
+              --paper: #FBFBF9;
+              --bone: #F2F0EB;
+              --line: rgba(14,14,14,0.10);
+              --line-strong: rgba(14,14,14,0.20);
+            }
+
+            @keyframes blink {
+              0%, 55% { opacity: 1; }
+              56%, 100% { opacity: 0.35; }
+            }
+
+            .anim-blink { animation: blink 2s steps(1) infinite; }
+
+            /* Institutional label */
+            .label-inst {
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.65rem;
+              letter-spacing: 0.32em;
+              text-transform: uppercase;
+              font-weight: 500;
+            }
+
+            .label-inst-sm {
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.6rem;
+              letter-spacing: 0.28em;
+              text-transform: uppercase;
+              font-weight: 500;
+            }
+
+            ::-webkit-scrollbar { width: 10px; height: 10px; }
+            ::-webkit-scrollbar-track { background: #FBFBF9; }
+            ::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.22); }
+            ::-webkit-scrollbar-thumb:hover { background: #B01E28; }
+          `,
+        }}
+      />
+
+      {/* =========================================================================
+          SIDEBAR — INSTITUTIONAL NAV (Dark)
+          ========================================================================= */}
+      <aside className="w-full lg:w-72 bg-[#0E0E0E] text-white flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen">
+
+        {/* Wordmark block */}
         <div>
-          <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold shadow-md shadow-emerald-600/20">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h1 className="font-bold text-sm text-slate-900 dark:text-white">Ndegwa Admin</h1>
-              <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Management Portal</p>
+          <div className="px-6 py-6 border-b border-white/10">
+            <Link href="/admin" className="flex items-baseline gap-3">
+              <span className="font-serif text-[1.6rem] font-medium tracking-tight text-white">
+                Ndegwa
+              </span>
+              <span className="label-inst-sm text-white/50">
+                Admin
+              </span>
+            </Link>
+            <div className="flex items-center gap-2 mt-4">
+              <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+              <span className="label-inst-sm text-white/40">
+                Management Portal
+              </span>
             </div>
           </div>
 
-          <nav className="p-4 space-y-1.5">
+          {/* Nav section label */}
+          <div className="px-6 pt-6 pb-3">
+            <span className="label-inst-sm text-white/35">Navigation</span>
+          </div>
+
+          {/* Nav */}
+          <nav className="px-4 pb-4 space-y-0.5">
             {navItems.map((item) => {
               const Icon = item.icon
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-medium text-sm transition-colors"
+                  className="group relative flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:bg-white/[0.04] hover:text-white transition-colors duration-300"
                 >
-                  <Icon className="w-4 h-4 text-slate-400" />
-                  {item.name}
+                  {/* Left red accent on hover */}
+                  <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#B01E28] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  <Icon className="w-4 h-4 text-white/50 group-hover:text-[#B01E28] transition-colors duration-300" strokeWidth={1.5} />
+
+                  <span className="font-medium">{item.name}</span>
                 </Link>
               )
             })}
           </nav>
+
+          {/* System section label */}
+          <div className="px-6 pt-6 pb-3 border-t border-white/10 mt-4">
+            <span className="label-inst-sm text-white/35">System</span>
+          </div>
+
+          {/* Secondary nav — settings duplicate for institutional pattern */}
+          <nav className="px-4 pb-4 space-y-0.5">
+            <Link
+              href="/admin/settings"
+              className="group relative flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:bg-white/[0.04] hover:text-white transition-colors duration-300"
+            >
+              <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#B01E28] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <Settings className="w-4 h-4 text-white/50 group-hover:text-[#B01E28] transition-colors duration-300" strokeWidth={1.5} />
+              <span className="font-medium">Settings</span>
+            </Link>
+          </nav>
         </div>
 
-        <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
+        {/* Bottom — view site link */}
+        <div className="p-4 border-t border-white/10">
           <Link
             href="/"
             target="_blank"
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="group flex items-center justify-between gap-3 border border-white/20 hover:border-white/40 hover:bg-white/[0.04] text-white/85 label-inst-sm px-4 py-3.5 transition-colors duration-300 w-full"
           >
-            View Live Website →
+            <span className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+              <span>View Live Website</span>
+            </span>
+            <span className="font-mono text-white/50 group-hover:text-white transition-colors duration-300">
+              →
+            </span>
           </Link>
+
+          {/* Session status */}
+          <div className="flex items-center gap-3 mt-4 px-1">
+            <ShieldCheck className="w-3 h-3 text-[#B01E28]" strokeWidth={1.75} />
+            <span className="label-inst-sm text-white/35">
+              {session ? 'Authenticated' : 'Guest Session'}
+            </span>
+          </div>
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto">
+      {/* =========================================================================
+          MAIN CONTENT AREA
+          ========================================================================= */}
+      <main className="flex-1 min-w-0 overflow-y-auto">
         {children}
       </main>
     </div>

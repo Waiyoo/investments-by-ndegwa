@@ -14,7 +14,6 @@ import {
   Globe,
   Lock,
   Sparkles,
-  Send,
 } from 'lucide-react'
 
 export const metadata = {
@@ -25,201 +24,218 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#faf8f5] dark:bg-[#0a0e17] text-[#0a0e17] dark:text-[#faf8f5] transition-colors duration-500 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-[#FBFBF9] text-[#0E0E0E] overflow-x-hidden antialiased">
 
       {/* =========================================================================
-          GLOBAL STYLES — Fonts, animations, textures
+          GLOBAL STYLES — Institutional Design System
           ========================================================================= */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
-            .font-display { font-family: 'Syne', system-ui, sans-serif; }
-            .font-body { font-family: 'Manrope', system-ui, sans-serif; }
+            .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; font-optical-sizing: auto; }
+            .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+            .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
-            @keyframes revealLine {
-              from { opacity: 0; transform: translateY(20px); }
+            :root {
+              --red: #B01E28;
+              --red-deep: #7A1219;
+              --ink: #0E0E0E;
+              --ink-soft: #1A1A1A;
+              --paper: #FBFBF9;
+              --bone: #F2F0EB;
+              --line: rgba(14,14,14,0.10);
+              --line-strong: rgba(14,14,14,0.20);
+            }
+
+            @keyframes fadeUp {
+              from { opacity: 0; transform: translateY(24px); }
               to { opacity: 1; transform: translateY(0); }
             }
-            @keyframes slideUp {
-              from { transform: translateY(105%); opacity: 0; }
-              to { transform: translateY(0); opacity: 1; }
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
             }
-            @keyframes panBg {
-              0% { background-position: 0% 50%; }
-              50% { background-position: 100% 50%; }
-              100% { background-position: 0% 50%; }
+            @keyframes scaleIn {
+              from { opacity: 0; transform: scale(1.06); }
+              to { opacity: 1; transform: scale(1); }
             }
-            @keyframes slowZoom {
-              0% { transform: scale(1.08); }
-              100% { transform: scale(1); }
+            @keyframes slowPan {
+              0%, 100% { transform: scale(1.05) translate(0, 0); }
+              50% { transform: scale(1.10) translate(-1%, -0.5%); }
             }
-            @keyframes floatBlob {
-              0%, 100% { transform: translate(0, 0) scale(1); }
-              50% { transform: translate(20px, -20px) scale(1.05); }
+            @keyframes drawLineX {
+              from { transform: scaleX(0); }
+              to { transform: scaleX(1); }
             }
-            @keyframes rotateSlow {
-              to { transform: rotate(360deg); }
+            @keyframes blink {
+              0%, 55% { opacity: 1; }
+              56%, 100% { opacity: 0.35; }
             }
-            @keyframes marqueeScroll {
+            @keyframes marqueeSlow {
               0% { transform: translateX(0); }
               100% { transform: translateX(-50%); }
             }
-            @keyframes pulseDot {
-              0%, 100% { transform: scale(1); opacity: 1; }
-              50% { transform: scale(1.4); opacity: 0.6; }
+
+            .anim-fade-up { animation: fadeUp 1.1s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-fade-in { animation: fadeIn 1.4s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-scale-in { animation: scaleIn 1.8s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-slow-pan { animation: slowPan 32s ease-in-out infinite; }
+            .anim-blink { animation: blink 2s steps(1) infinite; }
+            .anim-draw-x { animation: drawLineX 1.6s cubic-bezier(0.77,0,0.175,1) both; transform-origin: left; }
+            .anim-marquee-slow { animation: marqueeSlow 90s linear infinite; }
+
+            .d-1 { animation-delay: 0.15s; }
+            .d-2 { animation-delay: 0.30s; }
+            .d-3 { animation-delay: 0.45s; }
+            .d-4 { animation-delay: 0.60s; }
+            .d-5 { animation-delay: 0.75s; }
+            .d-6 { animation-delay: 0.90s; }
+
+            /* Grain */
+            .grain::after {
+              content:'';
+              position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+              opacity: 0.02;
+              background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
             }
 
-            .anim-reveal { animation: revealLine 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
-            .anim-slide-up { animation: slideUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
-            .anim-pan-bg { animation: panBg 30s ease-in-out infinite; }
-            .anim-slow-zoom { animation: slowZoom 25s ease-in-out infinite alternate; }
-            .anim-float-blob { animation: floatBlob 8s ease-in-out infinite; }
-            .anim-rotate-slow { animation: rotateSlow 20s linear infinite; }
-            .anim-marquee { animation: marqueeScroll 40s linear infinite; }
-            .anim-pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
+            /* Institutional image treatment */
+            .img-inst { filter: saturate(0.55) contrast(1.02) brightness(0.98); }
+            .img-inst-hero { filter: saturate(0.5) contrast(1.05) brightness(0.88); }
 
-            .delay-100 { animation-delay: 0.1s; }
-            .delay-250 { animation-delay: 0.25s; }
-            .delay-400 { animation-delay: 0.4s; }
-            .delay-600 { animation-delay: 0.6s; }
-            .delay-1000 { animation-delay: 1s; }
+            /* Tracking utilities */
+            .tracking-xxl { letter-spacing: 0.5em; }
+            .tracking-xl { letter-spacing: 0.32em; }
+            .tracking-lg { letter-spacing: 0.20em; }
 
-            .text-outline {
-              -webkit-text-stroke: 1.5px rgba(250, 248, 245, 0.7);
-              color: transparent;
+            /* Institutional label */
+            .label-inst {
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.65rem;
+              letter-spacing: 0.32em;
+              text-transform: uppercase;
+              font-weight: 500;
             }
 
-            .bg-grid {
-              background-image:
-                linear-gradient(rgba(10, 14, 23, 0.045) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(10, 14, 23, 0.045) 1px, transparent 1px);
-              background-size: 48px 48px;
-            }
-            .bg-grid-light {
-              background-image:
-                linear-gradient(rgba(250, 248, 245, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(250, 248, 245, 0.06) 1px, transparent 1px);
-              background-size: 60px 60px;
+            .label-inst-sm {
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.6rem;
+              letter-spacing: 0.28em;
+              text-transform: uppercase;
+              font-weight: 500;
             }
 
-            .bg-stripes {
-              background-image: repeating-linear-gradient(
-                45deg,
-                rgba(15, 155, 108, 0.06) 0px,
-                rgba(15, 155, 108, 0.06) 2px,
-                transparent 2px,
-                transparent 18px
-              );
-            }
-
-            ::-webkit-scrollbar { width: 8px; height: 8px; }
-            ::-webkit-scrollbar-track { background: transparent; }
-            ::-webkit-scrollbar-thumb { background: rgba(15, 155, 108, 0.3); border-radius: 4px; }
-            ::-webkit-scrollbar-thumb:hover { background: rgba(15, 155, 108, 0.6); }
+            ::-webkit-scrollbar { width: 10px; height: 10px; }
+            ::-webkit-scrollbar-track { background: #FBFBF9; }
+            ::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.22); }
+            ::-webkit-scrollbar-thumb:hover { background: #B01E28; }
           `,
         }}
       />
 
       {/* =========================================================================
-          1. PAGE HEADER — CINEMATIC WITH NAIROBI SKYLINE
+          1. PAGE HEADER — INSTITUTIONAL CORPORATE CONTACT
           ========================================================================= */}
-      <section className="relative pt-40 pb-20 lg:pt-52 lg:pb-28 overflow-hidden bg-[#0a0e17]">
+      <section className="relative bg-[#0E0E0E] text-white overflow-hidden">
 
-        {/* Layer 1: Nairobi skyline */}
+        {/* Background image — corporate architecture */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2200&q=85"
-            alt="Nairobi skyline"
-            className="w-full h-full object-cover opacity-40 anim-slow-zoom"
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2600&q=90"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.22] img-inst-hero anim-slow-pan"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0E0E0E] via-[#0E0E0E]/88 to-[#0E0E0E]/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E] via-transparent to-[#0E0E0E]/40" />
         </div>
 
-        {/* Layer 2: Gradient overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(15,155,108,0.35),transparent_55%),linear-gradient(180deg,rgba(10,14,23,0.7)_0%,rgba(10,14,23,0.95)_100%)] z-[1]" />
+        {/* Content */}
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 pt-32 lg:pt-40 pb-20 lg:pb-28">
+          <div className="grid grid-cols-12 gap-8">
 
-        {/* Layer 3: Corporate grid */}
-        <div
-          className="absolute inset-0 z-[1] opacity-[0.06]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(250,248,245,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(250,248,245,0.6) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
-
-        {/* Layer 4: Floating emerald blob */}
-        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-[120px] pointer-events-none anim-float-blob z-[2]" />
-
-        {/* Layer 5: Emerald accent line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent z-[2]" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-
-          {/* Top editorial line */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 mb-12 border-b border-white/15 anim-reveal">
-            <div className="flex items-center gap-4 text-emerald-300 text-xs font-semibold tracking-[0.3em] uppercase">
-              <span className="w-10 h-px bg-emerald-300" />
-              Get in Touch
-            </div>
-            <div className="text-white/50 text-xs tracking-[0.2em] uppercase font-medium flex items-center gap-3">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 anim-pulse-dot" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-              </span>
-              Nairobi · Available Now
-            </div>
-          </div>
-
-          {/* Headline */}
-          <div className="max-w-4xl">
-            <h1 className="font-display font-extrabold text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-[-0.045em] mb-8">
-              <span className="block overflow-hidden">
-                <span className="inline-block anim-slide-up">Contact</span>
-              </span>
-              <span className="block overflow-hidden">
-                <span className="inline-block anim-slide-up delay-250">
-                  <span className="text-outline">Ndegwa</span>{' '}
-                  <em className="italic font-normal text-emerald-300">Investments.</em>
+            {/* Left — the statement */}
+            <div className="col-span-12 lg:col-span-8">
+              <div className="flex items-center gap-4 mb-10 anim-fade-up">
+                <span className="w-12 h-px bg-[#B01E28]" />
+                <span className="label-inst text-white/60">
+                  Get in touch · Nairobi · Mon–Fri
                 </span>
-              </span>
-            </h1>
+              </div>
 
-            <p className="text-lg lg:text-xl text-white/75 leading-relaxed font-light max-w-2xl anim-reveal delay-600">
-              Reach out to our Nairobi headquarters for inquiries regarding our presented investment opportunities.
-            </p>
-          </div>
+              <h1 className="font-serif font-light text-white text-[2.75rem] sm:text-[4rem] lg:text-[5.5rem] leading-[1.02] tracking-[-0.02em] mb-12 max-w-[22ch]">
+                <span className="block anim-fade-up d-1">Contact</span>
+                <span className="block anim-fade-up d-2">
+                  Ndegwa <em className="italic font-normal text-[#B01E28]">Investments</em>.
+                </span>
+              </h1>
 
-          {/* Quick contact chips */}
-          <div className="flex flex-wrap gap-3 mt-10 anim-reveal delay-1000">
-            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/[0.06] backdrop-blur-sm border border-white/15 text-white text-sm">
-              <Phone className="w-4 h-4 text-emerald-300" />
-              <span className="font-medium">+254 799 357 038</span>
+              <p className="text-lg lg:text-xl text-white/70 leading-[1.75] font-light max-w-[56ch] mb-12 anim-fade-up d-4">
+                Reach out to our Nairobi headquarters for inquiries regarding our presented investment opportunities.
+              </p>
+
+              {/* Contact chips — mono labels */}
+              <div className="flex flex-wrap gap-0 anim-fade-up d-5">
+                {[
+                  { icon: Phone, label: '+254 799 357 038' },
+                  { icon: MapPin, label: 'Nairobi · Kenya' },
+                  { icon: Clock, label: 'Mon–Fri · 8am–6pm EAT' },
+                ].map((chip, i) => (
+                  <div
+                    key={i}
+                    className="inline-flex items-center gap-3 border border-white/20 px-5 py-3.5 -ml-px first:ml-0"
+                  >
+                    <chip.icon className="w-3.5 h-3.5 text-[#B01E28]" strokeWidth={1.5} />
+                    <span className="label-inst text-white/85">{chip.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/[0.06] backdrop-blur-sm border border-white/15 text-white text-sm">
-              <MapPin className="w-4 h-4 text-emerald-300" />
-              <span className="font-medium">Nairobi, Kenya</span>
-            </div>
-            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/[0.06] backdrop-blur-sm border border-white/15 text-white text-sm">
-              <Clock className="w-4 h-4 text-emerald-300" />
-              <span className="font-medium">Mon–Fri · 8am–6pm EAT</span>
+
+            {/* Right — availability panel */}
+            <div className="col-span-12 lg:col-span-4 lg:border-l lg:border-white/15 lg:pl-16 flex flex-col justify-end anim-fade-in d-6">
+              <div className="mb-6">
+                <span className="label-inst text-white/45 block mb-3">Status</span>
+                <span className="w-8 h-px bg-[#B01E28] block" />
+              </div>
+
+              <div className="flex items-center gap-3 mb-8">
+                <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+                <span className="label-inst text-white/85">Available Now</span>
+              </div>
+
+              <div className="flex flex-col">
+                {[
+                  { k: 'Time Zone', v: 'EAT (UTC+3)' },
+                  { k: 'Response', v: 'Within 24h' },
+                  { k: 'Channel', v: 'Direct Line' },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-baseline justify-between py-5 border-b border-white/12 last:border-b-0"
+                  >
+                    <span className="label-inst text-white/50">{item.k}</span>
+                    <span className="font-serif text-lg text-white">{item.v}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          2. MARQUEE — CONTINUITY WITH HOMEPAGE + ABOUT
+          2. MARQUEE STRIP — INSTITUTIONAL COMMUNICATION VALUES
           ========================================================================= */}
-      <div className="bg-[#0a0e17] text-[#faf8f5] py-5 overflow-hidden border-y border-white/10">
-        <div className="flex gap-16 whitespace-nowrap anim-marquee w-max">
+      <div className="bg-[#0E0E0E] text-white border-b border-white/10 py-5 overflow-hidden">
+        <div className="flex whitespace-nowrap anim-marquee-slow w-max label-inst text-white/40">
           {[0, 1].map((dup) => (
-            <div key={dup} className="flex gap-16 items-center">
+            <div key={dup} className="flex items-center">
               {['Direct Line', 'Local Presence', 'Verified Channels', 'Nairobi Based', 'Investor First'].map((item) => (
-                <span key={item} className="font-display text-xl sm:text-2xl font-semibold tracking-tight text-white/85 flex items-center gap-16">
-                  {item}
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span key={item} className="flex items-center">
+                  <span className="px-10">{item}</span>
+                  <span className="w-1 h-1 rounded-full bg-[#B01E28]" />
                 </span>
               ))}
             </div>
@@ -230,367 +246,323 @@ export default function ContactPage() {
       {/* =========================================================================
           3. PRIMARY CONTACT CARDS — HEADQUARTERS + ADVISORY
           ========================================================================= */}
-      <section className="relative py-24 lg:py-32 bg-[#faf8f5] dark:bg-[#0a0e17] overflow-hidden">
+      <section className="relative bg-[#FBFBF9] py-24 lg:py-40 border-b border-[var(--line)] overflow-hidden">
 
-        {/* Executive office backdrop */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.08] bg-cover bg-center anim-pan-bg"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        {/* Ghosted executive image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.035] img-inst anim-slow-pan"
+          />
+        </div>
 
-        {/* Corporate grid */}
-        <div className="absolute inset-0 z-[1] bg-grid opacity-60 dark:opacity-30" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10">
 
-        {/* Gradient fade */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#faf8f5]/95 via-[#faf8f5]/88 to-[#faf8f5]/95 dark:from-[#0a0e17]/95 dark:via-[#0a0e17]/88 dark:to-[#0a0e17]/95" />
-
-        {/* Emerald radial accent */}
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none z-[1]" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-
-          {/* Section head */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-16 mb-16 lg:mb-20">
-            <div className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-[0.3em] uppercase">
-              <span className="w-6 h-px bg-emerald-600 dark:bg-emerald-400" />
-              Reach Us Directly
+          {/* Section header */}
+          <div className="grid grid-cols-12 gap-8 mb-20 items-end">
+            <div className="col-span-12 lg:col-span-3">
+              <span className="label-inst text-[#0E0E0E]/45 block mb-4">01 — Direct Lines</span>
+              <span className="w-10 h-px bg-[#B01E28] block" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05] text-[#0a0e17] dark:text-[#faf8f5]">
-              Where to Find{' '}
-              <em className="italic font-normal text-emerald-600 dark:text-emerald-400">Us</em>, and How We Communicate.
-            </h2>
+            <div className="col-span-12 lg:col-span-9">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.05] tracking-[-0.02em] text-[#0E0E0E] max-w-[24ch] anim-fade-up">
+                Where to find us, and how we <em className="italic font-normal text-[#B01E28]">communicate</em>.
+              </h2>
+            </div>
           </div>
 
-          {/* Two-column grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Two-card grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
 
-            {/* Headquarters Information */}
-            <div className="group relative p-10 lg:p-12 rounded-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-[#e8e4dc] dark:border-white/10 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_rgba(15,155,108,0.2)] hover:border-emerald-500/40 overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Headquarters card */}
+            <article className="group relative bg-white border border-[var(--line)] p-10 lg:p-14 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)] anim-fade-up">
+              {/* Red hairline top */}
+              <div className="absolute top-0 left-0 w-16 h-px bg-[#B01E28] group-hover:w-32 transition-all duration-700" />
 
-              <div className="relative z-10">
-                {/* Header row */}
-                <div className="flex items-center justify-between mb-8">
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20 relative">
-                    <Building2 className="w-6 h-6 relative z-10" />
-                    <span className="absolute inset-0 rounded-2xl border border-dashed border-emerald-600/30 anim-rotate-slow" />
-                  </div>
-                  <span className="font-display text-xs font-semibold text-[#8a8577] dark:text-white/40 tracking-[0.2em]">
-                    / 01
-                  </span>
+              <div className="flex items-start justify-between mb-10">
+                <div className="w-14 h-14 border border-[#0E0E0E] flex items-center justify-center text-[#0E0E0E]">
+                  <Building2 className="w-5 h-5" strokeWidth={1.5} />
                 </div>
-
-                <h3 className="font-display text-2xl lg:text-3xl font-bold tracking-[-0.025em] leading-tight text-[#0a0e17] dark:text-[#faf8f5] mb-6">
-                  Headquarters Information
-                </h3>
-
-                {/* Contact details */}
-                <div className="flex flex-col">
-
-                  {/* Location */}
-                  <div className="group/row flex items-start gap-4 py-5 border-b border-[#e8e4dc] dark:border-white/10 transition-all duration-300 hover:pl-2">
-                    <div className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/20">
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-display text-sm font-bold tracking-[-0.01em] text-[#0a0e17] dark:text-[#faf8f5] mb-1">
-                        Location
-                      </h4>
-                      <p className="text-[0.95rem] text-[#5a5750] dark:text-slate-400">
-                        Nairobi, Kenya
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Phone */}
-                  <div className="group/row flex items-start gap-4 py-5 border-b border-[#e8e4dc] dark:border-white/10 transition-all duration-300 hover:pl-2">
-                    <div className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/20">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-display text-sm font-bold tracking-[-0.01em] text-[#0a0e17] dark:text-[#faf8f5] mb-1">
-                        Direct Phone
-                      </h4>
-                      <a
-                        href="tel:+254799357038"
-                        className="block text-[0.95rem] text-[#5a5750] dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                      >
-                        +254 799 357 038
-                      </a>
-                      <a
-                        href="tel:+254799357038"
-                        className="block text-xs text-[#8a8577] dark:text-white/40 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors mt-0.5"
-                      >
-                        0799357038
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Hours */}
-                  <div className="group/row flex items-start gap-4 py-5 transition-all duration-300 hover:pl-2">
-                    <div className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/20">
-                      <Clock className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-display text-sm font-bold tracking-[-0.01em] text-[#0a0e17] dark:text-[#faf8f5] mb-1">
-                        Office Hours
-                      </h4>
-                      <p className="text-[0.95rem] text-[#5a5750] dark:text-slate-400">
-                        Monday – Friday · 8:00am – 6:00pm EAT
-                      </p>
-                      <p className="text-xs text-[#8a8577] dark:text-white/40 mt-0.5">
-                        Closed on public holidays
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Call CTA */}
-                <a
-                  href="tel:+254799357038"
-                  className="inline-flex items-center justify-center gap-3 w-full mt-8 px-7 py-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-all duration-500 shadow-[0_15px_30px_-10px_rgba(15,155,108,0.6)] hover:shadow-[0_25px_40px_-12px_rgba(52,211,153,0.7)] hover:-translate-y-0.5 group/cta"
-                >
-                  <Phone className="w-4 h-4" />
-                  Call Our Office
-                  <ArrowUpRight className="w-4 h-4 transition-transform duration-500 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
-                </a>
+                <span className="font-mono text-[0.7rem] text-[#0E0E0E]/35">
+                  / 01
+                </span>
               </div>
-            </div>
 
-            {/* Advisory Notice */}
-            <div className="group relative p-10 lg:p-12 rounded-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-[#e8e4dc] dark:border-white/10 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_rgba(201,169,97,0.2)] hover:border-[#c9a961]/50 overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#c9a961]/5 rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <h3 className="font-serif text-[1.75rem] lg:text-[2.25rem] font-normal tracking-[-0.01em] text-[#0E0E0E] leading-[1.15] mb-8 max-w-[22ch]">
+                Headquarters information
+              </h3>
 
-              <div className="relative z-10">
-                {/* Header row */}
-                <div className="flex items-center justify-between mb-8">
-                  <div className="w-14 h-14 rounded-2xl bg-[#c9a961]/10 text-[#c9a961] flex items-center justify-center border border-[#c9a961]/25 relative">
-                    <ShieldAlert className="w-6 h-6 relative z-10" />
-                    <span className="absolute inset-0 rounded-2xl border border-dashed border-[#c9a961]/30 anim-rotate-slow" />
+              <div className="flex flex-col border-t border-[var(--line)]">
+
+                {/* Location */}
+                <div className="grid grid-cols-[auto_1fr] gap-5 py-6 border-b border-[var(--line)]">
+                  <MapPin className="w-4 h-4 text-[#B01E28] mt-1 flex-shrink-0" strokeWidth={1.5} />
+                  <div>
+                    <span className="label-inst-sm text-[#0E0E0E]/45 block mb-2">Location</span>
+                    <p className="text-[0.95rem] text-[#0E0E0E]/85">Nairobi, Kenya</p>
                   </div>
-                  <span className="font-display text-xs font-semibold text-[#8a8577] dark:text-white/40 tracking-[0.2em]">
-                    / 02
-                  </span>
                 </div>
 
-                <h3 className="font-display text-2xl lg:text-3xl font-bold tracking-[-0.025em] leading-tight text-[#0a0e17] dark:text-[#faf8f5] mb-6">
-                  Advisory Notice
-                </h3>
+                {/* Phone */}
+                <div className="grid grid-cols-[auto_1fr] gap-5 py-6 border-b border-[var(--line)]">
+                  <Phone className="w-4 h-4 text-[#B01E28] mt-1 flex-shrink-0" strokeWidth={1.5} />
+                  <div>
+                    <span className="label-inst-sm text-[#0E0E0E]/45 block mb-2">Direct Phone</span>
+                    <a
+                      href="tel:+254799357038"
+                      className="block text-[0.95rem] text-[#0E0E0E]/85 hover:text-[#B01E28] transition-colors font-medium"
+                    >
+                      +254 799 357 038
+                    </a>
+                    <a
+                      href="tel:+254799357038"
+                      className="block text-xs font-mono text-[#0E0E0E]/45 hover:text-[#B01E28] transition-colors mt-1"
+                    >
+                      0799357038
+                    </a>
+                  </div>
+                </div>
 
-                <div className="flex flex-col gap-4">
-                  <p className="text-[0.95rem] text-[#5a5750] dark:text-slate-400 leading-relaxed">
-                    Ndegwa Investments does not maintain a general public email address at this time. All inquiries should be directed via phone or through specific investment inquiry forms on our platform.
-                  </p>
+                {/* Hours */}
+                <div className="grid grid-cols-[auto_1fr] gap-5 py-6 border-b border-[var(--line)] last:border-b-0">
+                  <Clock className="w-4 h-4 text-[#B01E28] mt-1 flex-shrink-0" strokeWidth={1.5} />
+                  <div>
+                    <span className="label-inst-sm text-[#0E0E0E]/45 block mb-2">Office Hours</span>
+                    <p className="text-[0.95rem] text-[#0E0E0E]/85">
+                      Monday – Friday · 8:00am – 6:00pm EAT
+                    </p>
+                    <p className="text-xs font-mono text-[#0E0E0E]/45 mt-1">
+                      Closed on public holidays
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-                  {/* Warning box */}
-                  <div className="p-4 rounded-2xl bg-[#c9a961]/10 border border-[#c9a961]/25 text-sm text-[#7a6532] dark:text-[#e8d9b5] flex items-start gap-3">
-                    <ShieldAlert className="w-5 h-5 flex-shrink-0 mt-0.5 text-[#c9a961]" />
-                    <span className="leading-relaxed font-medium">
-                      We never request funds via unsecured channels or payment processors.
+              {/* Call CTA */}
+              <a
+                href="tel:+254799357038"
+                className="group/cta flex items-center justify-between gap-6 bg-[#B01E28] hover:bg-[#0E0E0E] text-white label-inst px-6 py-5 mt-8 transition-colors duration-500"
+              >
+                <span className="flex items-center gap-3">
+                  <Phone className="w-4 h-4" strokeWidth={1.5} />
+                  Call Our Office
+                </span>
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-500 group-hover/cta:rotate-45" />
+              </a>
+            </article>
+
+            {/* Advisory Notice card */}
+            <article
+              className="group relative bg-white border border-[var(--line)] p-10 lg:p-14 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)] anim-fade-up d-2"
+            >
+              {/* Red hairline top */}
+              <div className="absolute top-0 left-0 w-16 h-px bg-[#B01E28] group-hover:w-32 transition-all duration-700" />
+
+              <div className="flex items-start justify-between mb-10">
+                <div className="w-14 h-14 border border-[#0E0E0E]/25 flex items-center justify-center text-[#0E0E0E]/60">
+                  <ShieldAlert className="w-5 h-5" strokeWidth={1.5} />
+                </div>
+                <span className="font-mono text-[0.7rem] text-[#0E0E0E]/35">
+                  / 02
+                </span>
+              </div>
+
+              <h3 className="font-serif text-[1.75rem] lg:text-[2.25rem] font-normal tracking-[-0.01em] text-[#0E0E0E] leading-[1.15] mb-6 max-w-[22ch]">
+                Advisory notice
+              </h3>
+
+              <p className="text-[0.95rem] leading-[1.85] text-[#0E0E0E]/65 mb-6">
+                Ndegwa Investments does not maintain a general public email address at this time. All inquiries should be directed via phone or through specific investment inquiry forms on our platform.
+              </p>
+
+              {/* Warning box — institutional alert */}
+              <div className="border-l-2 border-[#B01E28] bg-[#B01E28]/5 px-5 py-4 mb-8">
+                <div className="flex items-start gap-3">
+                  <ShieldAlert className="w-4 h-4 text-[#B01E28] flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <span className="text-[0.85rem] leading-[1.7] text-[#0E0E0E]/80 font-medium">
+                    We never request funds via unsecured channels or payment processors.
+                  </span>
+                </div>
+              </div>
+
+              {/* Trust guidelines */}
+              <div className="flex flex-col border-t border-[var(--line)]">
+                {[
+                  'All communication is initiated by the investor',
+                  'No upfront payment is ever requested',
+                  'Investment inquiry forms route directly to our team',
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-4 py-4 border-b border-[var(--line)] last:border-b-0 transition-all duration-500 hover:pl-2"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-[#B01E28] flex-shrink-0" strokeWidth={1.5} />
+                    <span className="text-sm text-[#0E0E0E]/75">
+                      {item}
                     </span>
                   </div>
-
-                  {/* Trust guidelines */}
-                  <div className="mt-2 flex flex-col">
-                    {[
-                      'All communication is initiated by the investor',
-                      'No upfront payment is ever requested',
-                      'Investment inquiry forms route directly to our team',
-                    ].map((item, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-3 py-3.5 border-b border-[#e8e4dc] dark:border-white/10 last:border-b-0 transition-all duration-300 hover:pl-2"
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                        <span className="text-sm text-[#5a5750] dark:text-slate-400 font-medium">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          4. COMMUNICATION GUIDELINES — DARK EDITORIAL WITH FINANCIAL BACKDROP
+          4. COMMUNICATION GUIDELINES — DARK INSTITUTIONAL
           ========================================================================= */}
-      <section className="relative py-24 lg:py-32 bg-[#0a0e17] text-[#faf8f5] overflow-hidden">
+      <section className="relative bg-[#0E0E0E] text-white border-b border-white/10 overflow-hidden">
 
-        {/* Financial backdrop */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.08] bg-cover bg-center anim-pan-bg"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        {/* Ghosted financial backdrop */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.08] img-inst anim-slow-pan"
+          />
+        </div>
 
-        {/* Corporate grid overlay */}
-        <div className="absolute inset-0 z-[1] bg-grid-light opacity-60" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 py-24 lg:py-40">
 
-        {/* Radial emerald glow */}
-        <div className="absolute top-0 -left-1/4 w-[60%] h-full bg-[radial-gradient(ellipse_at_center,rgba(15,155,108,0.18),transparent_60%)] pointer-events-none z-[1]" />
-
-        {/* Bottom emerald glow */}
-        <div className="absolute -bottom-40 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none z-[1]" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-
-          {/* Section head */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-16 mb-16">
-            <div className="flex items-center gap-3 text-emerald-300 text-xs font-bold tracking-[0.3em] uppercase">
-              <span className="w-6 h-px bg-emerald-300" />
-              Communication Guidelines
+          {/* Header */}
+          <div className="grid grid-cols-12 gap-8 mb-20 items-end">
+            <div className="col-span-12 lg:col-span-3">
+              <span className="label-inst text-white/45 block mb-4">02 — Guidelines</span>
+              <span className="w-10 h-px bg-[#B01E28] block" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05]">
-              How We{' '}
-              <em className="italic font-normal text-emerald-300">Engage</em> with Investors.
-            </h2>
+            <div className="col-span-12 lg:col-span-9">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.05] tracking-[-0.02em] text-white max-w-[26ch] anim-fade-up">
+                How we <em className="italic font-normal text-[#B01E28]">engage</em> with investors.
+              </h2>
+            </div>
           </div>
 
           {/* Guidelines grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-t border-white/12">
             {[
               {
                 icon: Phone,
                 num: '01',
-                title: 'Direct Phone First',
+                title: 'Direct phone first',
                 desc: 'All primary inquiries are handled via our direct Nairobi line, ensuring personal, accountable communication with our advisory team.',
               },
               {
                 icon: Lock,
                 num: '02',
-                title: 'Secure Inquiry Forms',
+                title: 'Secure inquiry forms',
                 desc: 'Investment-specific inquiries are submitted through verified platform forms that route directly to our internal review team.',
               },
               {
                 icon: Globe,
                 num: '03',
-                title: 'No Public Email',
+                title: 'No public email',
                 desc: 'We do not publish a general email address. This protects both our investors and our team from unverified and impersonation-based outreach.',
               },
             ].map((item, idx) => (
-              <div
+              <article
                 key={idx}
-                className="group relative rounded-3xl bg-white/[0.04] backdrop-blur-sm border border-white/10 p-8 flex flex-col overflow-hidden transition-all duration-700 hover:-translate-y-1.5 hover:border-emerald-400/40 hover:bg-white/[0.07]"
+                className={`group relative py-12 lg:py-16 ${
+                  idx < 2 ? 'lg:border-r border-white/12' : ''
+                } ${idx < 2 ? 'border-b lg:border-b-0 border-white/12' : ''} ${
+                  idx === 0 ? 'lg:pr-12' : idx === 1 ? 'lg:px-12' : 'lg:pl-12'
+                }`}
               >
-                {/* Hover glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(52,211,153,0.1),transparent_40%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-400/10 border border-emerald-400/25 flex items-center justify-center text-emerald-300 relative">
-                      <item.icon className="w-5 h-5 relative z-10" />
-                      <span className="absolute inset-0 rounded-2xl border border-dashed border-emerald-400/30 anim-rotate-slow" />
-                    </div>
-                    <span className="font-display text-xs font-semibold tracking-[0.2em] text-white/30">
-                      / {item.num}
-                    </span>
-                  </div>
-
-                  <h3 className="font-display text-xl font-bold tracking-[-0.02em] leading-tight text-white mb-4 transition-colors duration-300 group-hover:text-emerald-300">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm text-white/60 leading-relaxed">
-                    {item.desc}
-                  </p>
+                {/* Number + icon */}
+                <div className="flex items-baseline justify-between mb-10">
+                  <span className="font-serif text-6xl lg:text-7xl font-light text-[#B01E28] leading-none">
+                    {item.num}
+                  </span>
+                  <item.icon className="w-6 h-6 text-white/40" strokeWidth={1.25} />
                 </div>
-              </div>
+
+                <h3 className="font-serif text-2xl lg:text-[1.75rem] font-normal tracking-[-0.01em] text-white leading-[1.2] mb-5 max-w-[22ch]">
+                  {item.title}
+                </h3>
+
+                <p className="text-[0.95rem] leading-[1.8] text-white/60 font-light">
+                  {item.desc}
+                </p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          5. MAP-STYLE LOCATION BLOCK — LIGHT EDITORIAL
+          5. LOCATION BLOCK — FULL-BLEED EDITORIAL
           ========================================================================= */}
-      <section className="relative py-24 lg:py-32 bg-[#f5f0e8] dark:bg-[#0a0e17] overflow-hidden">
+      <section className="relative bg-[#F2F0EB] border-b border-[var(--line)] overflow-hidden">
 
-        {/* Strategy backdrop */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.08] bg-cover bg-center anim-pan-bg"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        {/* Ghosted blueprint */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.04] img-inst anim-slow-pan"
+          />
+        </div>
 
-        {/* Diagonal stripes */}
-        <div className="absolute inset-0 z-[1] bg-stripes opacity-40 dark:opacity-30" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
 
-        {/* Gradient fade */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#f5f0e8]/95 via-[#f5f0e8]/88 to-[#f5f0e8]/95 dark:from-[#0a0e17]/95 dark:via-[#0a0e17]/88 dark:to-[#0a0e17]/95" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-16 mb-16">
-            <div className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400 text-xs font-bold tracking-[0.3em] uppercase">
-              <span className="w-6 h-px bg-emerald-600 dark:bg-emerald-400" />
-              Our Location
+          {/* Header */}
+          <div className="grid grid-cols-12 gap-8 mb-16 items-end">
+            <div className="col-span-12 lg:col-span-3">
+              <span className="label-inst text-[#0E0E0E]/45 block mb-4">03 — Location</span>
+              <span className="w-10 h-px bg-[#B01E28] block" />
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05] text-[#0a0e17] dark:text-[#faf8f5]">
-              Headquartered in{' '}
-              <em className="italic font-normal text-emerald-600 dark:text-emerald-400">Nairobi</em>, Kenya.
-            </h2>
+            <div className="col-span-12 lg:col-span-9">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.05] tracking-[-0.02em] text-[#0E0E0E] max-w-[24ch] anim-fade-up">
+                Headquartered in <em className="italic font-normal text-[#B01E28]">Nairobi</em>, Kenya.
+              </h2>
+            </div>
           </div>
 
-          {/* Location card with image */}
-          <div className="relative rounded-3xl overflow-hidden min-h-[480px] flex flex-col justify-end p-10 lg:p-14 text-[#faf8f5] bg-[#0a0e17] group">
+          {/* Location card with full image */}
+          <div className="relative overflow-hidden bg-[#0E0E0E] min-h-[520px] flex flex-col justify-end group anim-fade-up">
 
-            {/* Background image — Nairobi skyline */}
+            {/* Background image */}
             <img
-              src="https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=2000&q=80"
-              alt="Nairobi, Kenya"
-              className="absolute inset-0 w-full h-full object-cover opacity-55 z-0 transition-transform duration-1000 group-hover:scale-105"
+              src="https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=2400&q=85"
+              alt="Nairobi"
+              className="absolute inset-0 w-full h-full object-cover opacity-55 img-inst-hero transition-transform duration-[1400ms] group-hover:scale-[1.04]"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E] via-[#0E0E0E]/75 to-[#0E0E0E]/30" />
 
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e17] via-[#0a0e17]/75 to-[#0a0e17]/30 z-[1]" />
-
-            {/* Emerald glow inside */}
-            <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-emerald-500/25 rounded-full blur-[100px] z-[1] pointer-events-none" />
-
-            {/* Grid overlay */}
-            <div
-              className="absolute inset-0 z-[1] opacity-[0.08]"
-              style={{
-                backgroundImage:
-                  'linear-gradient(rgba(250,248,245,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(250,248,245,0.5) 1px, transparent 1px)',
-                backgroundSize: '60px 60px',
-              }}
-            />
-
-            <div className="relative z-10 max-w-2xl">
-              <span className="block text-[0.65rem] font-bold tracking-[0.3em] uppercase text-emerald-300 mb-4">
-                <MapPin className="w-3.5 h-3.5 inline mr-2 -mt-0.5" />
-                Nairobi, Kenya
-              </span>
-
-              <h3 className="font-display text-3xl lg:text-5xl font-bold tracking-[-0.03em] leading-[1.05] mb-6">
-                Our team operates from Kenya's commercial capital — the gateway to East African markets.
-              </h3>
-
-              <p className="text-sm lg:text-base text-white/70 leading-relaxed max-w-xl mb-8">
-                Being anchored in Nairobi gives us direct access to regional deal flow, sponsor networks, and on-the-ground verification of every opportunity we present.
-              </p>
-
-              <div className="flex flex-wrap gap-3">
-                {['East Africa Hub', 'Regional Networks', 'On-Ground Verification'].map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-4 py-2 rounded-full text-xs font-semibold tracking-wide text-emerald-300 border border-emerald-400/30 bg-emerald-400/10 backdrop-blur-sm"
-                  >
-                    {tag}
+            {/* Content */}
+            <div className="relative z-10 p-10 lg:p-16 text-white">
+              <div className="grid grid-cols-12 gap-8 items-end">
+                <div className="col-span-12 lg:col-span-8">
+                  <span className="flex items-center gap-3 label-inst text-[#B01E28] mb-6">
+                    <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
+                    Nairobi · Kenya
                   </span>
-                ))}
+
+                  <h3 className="font-serif font-light text-[2rem] sm:text-[2.5rem] lg:text-[3.5rem] leading-[1.05] tracking-[-0.02em] mb-8 max-w-[22ch]">
+                    Our team operates from Kenya's commercial capital — the <em className="italic font-normal text-[#B01E28]">gateway</em> to East African markets.
+                  </h3>
+
+                  <p className="text-base lg:text-lg text-white/70 leading-[1.75] font-light max-w-2xl mb-10">
+                    Being anchored in Nairobi gives us direct access to regional deal flow, sponsor networks, and on-the-ground verification of every opportunity we present.
+                  </p>
+                </div>
+
+                {/* Tag stack right */}
+                <div className="col-span-12 lg:col-span-4 lg:border-l lg:border-white/15 lg:pl-10 flex flex-col">
+                  {[
+                    { k: 'Region', v: 'East Africa Hub' },
+                    { k: 'Networks', v: 'Regional' },
+                    { k: 'Verification', v: 'On-Ground' },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-baseline justify-between py-5 border-b border-white/12 last:border-b-0"
+                    >
+                      <span className="label-inst text-white/50">{item.k}</span>
+                      <span className="font-serif text-lg text-white">{item.v}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -598,71 +570,173 @@ export default function ContactPage() {
       </section>
 
       {/* =========================================================================
-          6. CTA — FINAL CONVERSION BAND
+          6. CTA — FINAL CONVERSION
           ========================================================================= */}
-      <section className="relative py-24 lg:py-28 overflow-hidden bg-[#0a0e17] text-[#faf8f5]">
+      <section className="relative bg-[#0E0E0E] text-white overflow-hidden">
 
         {/* Executive meeting backdrop */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.12] bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1542744094-3a31246264d0?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1542744094-3a31246264d0?auto=format&fit=crop&w=2400&q=85"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.20] img-inst-hero anim-slow-pan"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0E0E0E] via-[#0E0E0E]/88 to-[#0E0E0E]/55" />
+        </div>
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e17]/95 via-[#0a0e17]/88 to-[#0a0e17]/95 z-[1]" />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+          <div className="grid grid-cols-12 gap-8 items-end">
 
-        {/* Emerald glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-emerald-500/15 rounded-full blur-[140px] pointer-events-none z-[1]" />
+            {/* Left — headline */}
+            <div className="col-span-12 lg:col-span-7">
+              <div className="flex items-center gap-4 mb-10 anim-fade-up">
+                <span className="label-inst text-white/45">04 — Next Steps</span>
+                <span className="w-10 h-px bg-[#B01E28]" />
+              </div>
 
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10 text-center">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[4rem] leading-[1.05] tracking-[-0.02em] text-white max-w-[22ch] mb-8 anim-fade-up d-1">
+                Discover <em className="italic font-normal text-[#B01E28]">curated</em> investment opportunities.
+              </h2>
 
-          <div className="inline-flex items-center gap-3 text-emerald-300 text-xs font-bold tracking-[0.3em] uppercase mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            Explore Our Platform
-          </div>
+              <p className="text-lg leading-[1.75] text-white/70 font-light max-w-lg anim-fade-up d-3">
+                Browse our current portfolio of vetted commercial, agricultural, and real estate ventures across Kenya.
+              </p>
+            </div>
 
-          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.035em] leading-[1.05] mb-6">
-            Discover{' '}
-            <em className="italic font-normal text-emerald-300">Curated</em> Investment Opportunities.
-          </h2>
+            {/* Right — CTA buttons */}
+            <div className="col-span-12 lg:col-span-5 lg:pl-16 lg:border-l lg:border-white/15 anim-fade-in d-5">
+              <span className="label-inst text-white/45 block mb-8">Engage</span>
 
-          <p className="text-base lg:text-lg text-white/65 max-w-2xl mx-auto leading-relaxed mb-10">
-            Browse our current portfolio of vetted commercial, agricultural, and real estate ventures across Kenya.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/investments"
-              className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full bg-emerald-600 hover:bg-emerald-400 text-white font-semibold text-sm transition-all duration-500 shadow-[0_15px_30px_-10px_rgba(15,155,108,0.6)] hover:shadow-[0_25px_40px_-12px_rgba(52,211,153,0.7)] hover:-translate-y-1 group"
-            >
-              Browse Opportunities
-              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center transition-transform duration-500 group-hover:translate-x-1 group-hover:-rotate-45">
-                <ArrowRight className="w-3.5 h-3.5" />
-              </span>
-            </Link>
-            <Link
-              href="/about"
-              className="inline-flex items-center justify-center px-7 py-4 rounded-full border border-white/30 text-white font-semibold text-sm transition-all duration-500 hover:bg-white/10 hover:border-white backdrop-blur-sm"
-            >
-              Learn About Us
-            </Link>
+              <div className="flex flex-col gap-0">
+                <Link
+                  href="/investments"
+                  className="group flex items-center justify-between gap-6 bg-[#B01E28] hover:bg-white hover:text-[#0E0E0E] text-white label-inst px-8 py-5 transition-colors duration-500"
+                >
+                  <span>Browse Opportunities</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="/about"
+                  className="group flex items-center justify-between gap-6 border border-white/30 hover:border-white text-white label-inst px-8 py-5 transition-colors duration-500 border-t-0"
+                >
+                  <span>Learn About Us</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* =========================================================================
-          7. FOOTER STRIP
+          7. FOOTER — INSTITUTIONAL MASTHEAD
           ========================================================================= */}
-      <footer className="bg-[#0a0e17] text-white/40 py-10 text-center text-xs tracking-[0.05em] border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <span>© 2026 Ndegwa Investments · Curated Capital for Considered Growth</span>
-          <span className="flex items-center gap-2">
-            <MapPin className="w-3 h-3 text-emerald-300" />
-            <span className="text-emerald-300">Nairobi, Kenya</span>
-          </span>
+      <footer className="bg-[#0E0E0E] text-white border-t border-white/10">
+
+        {/* Top marquee */}
+        <div className="border-b border-white/10 py-5 overflow-hidden">
+          <div className="flex whitespace-nowrap anim-marquee-slow w-max label-inst text-white/30">
+            {[0, 1].map((dup) => (
+              <div key={dup} className="flex items-center">
+                {['Private Capital', 'Real Estate', 'Agriculture', 'Commercial', 'East Africa', 'Nairobi', 'MMXXVI'].map((item) => (
+                  <span key={item} className="flex items-center">
+                    <span className="px-10">{item}</span>
+                    <span className="w-1 h-1 rounded-full bg-[#B01E28]" />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Masthead */}
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-16 lg:py-20">
+          <div className="grid grid-cols-12 gap-8 lg:gap-16">
+
+            {/* Wordmark block */}
+            <div className="col-span-12 lg:col-span-5">
+              <span className="font-serif text-3xl lg:text-[2.5rem] font-normal tracking-tight text-white block mb-6">
+                Ndegwa Investments
+              </span>
+              <p className="text-sm leading-[1.8] text-white/50 max-w-md mb-8">
+                A Nairobi-based private investment firm. Curated capital for considered growth across real estate, agriculture, and commercial sectors in Kenya.
+              </p>
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+                <span className="label-inst text-white/45">
+                  Vol. 01 · MMXXVI
+                </span>
+              </div>
+            </div>
+
+            {/* Nav columns */}
+            <div className="col-span-12 lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
+              <div>
+                <span className="label-inst text-white/45 block mb-6">Firm</span>
+                <ul className="flex flex-col gap-4">
+                  {[
+                    { l: 'Home', h: '/' },
+                    { l: 'About', h: '/about' },
+                    { l: 'Contact', h: '/contact' },
+                  ].map((item) => (
+                    <li key={item.l}>
+                      <Link href={item.h} className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
+                        {item.l}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <span className="label-inst text-white/45 block mb-6">Platform</span>
+                <ul className="flex flex-col gap-4">
+                  {[
+                    { l: 'Opportunities', h: '/investments' },
+                    { l: 'Process', h: '/about' },
+                    { l: 'Standards', h: '/about' },
+                  ].map((item) => (
+                    <li key={item.l}>
+                      <Link href={item.h} className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
+                        {item.l}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <span className="label-inst text-white/45 block mb-6">Contact</span>
+                <ul className="flex flex-col gap-4">
+                  <li>
+                    <a href="tel:+254799357038" className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
+                      +254 799 357 038
+                    </a>
+                  </li>
+                  <li>
+                    <a href="mailto:advisory@ndegwainvestments.com" className="text-sm text-white/70 hover:text-[#B01E28] transition-colors break-all">
+                      advisory@ndegwainvestments.com
+                    </a>
+                  </li>
+                  <li className="text-sm text-white/50">
+                    Nairobi, Kenya
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/10">
+          <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <span className="label-inst text-white/35">
+              © 2026 Ndegwa Investments — All rights reserved
+            </span>
+            <div className="flex items-center gap-6 label-inst text-white/35">
+              <span>Nairobi · 01°17'S 36°49'E</span>
+              <span className="w-px h-3 bg-white/15" />
+              <span>EN</span>
+            </div>
+          </div>
         </div>
       </footer>
 

@@ -16,122 +16,245 @@ export default async function AdminInquiriesPage() {
   })
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-          Investment Inquiries
-        </h1>
+    <div className="flex flex-col min-h-screen bg-[#FBFBF9] text-[#0E0E0E] overflow-x-hidden antialiased">
 
-        <p className="mt-1 text-slate-600 dark:text-slate-400">
-          Manage inquiries submitted by potential investors.
-        </p>
-      </div>
+      {/* =========================================================================
+          GLOBAL STYLES — Institutional Admin System
+          ========================================================================= */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        {inquiries.length === 0 ? (
-          <div className="p-10 text-center text-slate-500 dark:text-slate-400">
-            No investment inquiries yet.
+            .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; font-optical-sizing: auto; }
+            .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+            .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+            :root {
+              --red: #B01E28;
+              --red-deep: #7A1219;
+              --ink: #0E0E0E;
+              --ink-soft: #1A1A1A;
+              --paper: #FBFBF9;
+              --bone: #F2F0EB;
+              --line: rgba(14,14,14,0.10);
+              --line-strong: rgba(14,14,14,0.20);
+            }
+
+            @keyframes fadeUp {
+              from { opacity: 0; transform: translateY(16px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            @keyframes blink {
+              0%, 55% { opacity: 1; }
+              56%, 100% { opacity: 0.35; }
+            }
+
+            .anim-fade-up { animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-fade-in { animation: fadeIn 1s cubic-bezier(0.22,1,0.36,1) both; }
+            .anim-blink { animation: blink 2s steps(1) infinite; }
+
+            .d-1 { animation-delay: 0.08s; }
+            .d-2 { animation-delay: 0.16s; }
+            .d-3 { animation-delay: 0.24s; }
+
+            /* Institutional label */
+            .label-inst {
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.65rem;
+              letter-spacing: 0.32em;
+              text-transform: uppercase;
+              font-weight: 500;
+            }
+
+            .label-inst-sm {
+              font-family: 'IBM Plex Mono', monospace;
+              font-size: 0.6rem;
+              letter-spacing: 0.28em;
+              text-transform: uppercase;
+              font-weight: 500;
+            }
+
+            ::-webkit-scrollbar { width: 10px; height: 10px; }
+            ::-webkit-scrollbar-track { background: #FBFBF9; }
+            ::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.22); }
+            ::-webkit-scrollbar-thumb:hover { background: #B01E28; }
+          `,
+        }}
+      />
+
+      <div className="p-6 lg:p-10 max-w-[1600px] w-full mx-auto">
+
+        {/* =========================================================================
+            PAGE HEADING — INSTITUTIONAL
+            ========================================================================= */}
+        <div className="grid grid-cols-12 gap-8 mb-12 items-end anim-fade-up">
+          <div className="col-span-12 lg:col-span-8">
+            <div className="flex items-center gap-4 mb-6">
+              <span className="label-inst text-[#0E0E0E]/45">Inbox</span>
+              <span className="w-10 h-px bg-[#B01E28]" />
+            </div>
+            <h1 className="font-serif font-light text-[2.5rem] sm:text-[3rem] lg:text-[3.5rem] leading-[1.02] tracking-[-0.02em] text-[#0E0E0E] mb-5">
+              Investment inquiries.
+            </h1>
+            <p className="text-[0.95rem] leading-[1.75] text-[#0E0E0E]/60 max-w-xl">
+              Manage inquiries submitted by potential investors.
+            </p>
           </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800">
-                <tr>
-                  <th className="p-4 text-left text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    Investor
-                  </th>
 
-                  <th className="p-4 text-left text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    Investment
-                  </th>
+          <div className="col-span-12 lg:col-span-4 lg:text-right">
+            <span className="inline-flex items-center gap-3 label-inst text-[#0E0E0E]/60 border border-[var(--line)] px-4 py-2.5 bg-white">
+              <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+              {inquiries.length} {inquiries.length === 1 ? 'Inquiry' : 'Inquiries'}
+            </span>
+          </div>
+        </div>
 
-                  <th className="p-4 text-left text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    Amount
-                  </th>
+        {/* =========================================================================
+            INQUIRIES TABLE
+            ========================================================================= */}
+        <div className="relative bg-white border border-[var(--line)] anim-fade-up d-2">
+          {/* Top red hairline */}
+          <div className="absolute top-0 left-0 w-24 h-px bg-[#B01E28]" />
 
-                  <th className="p-4 text-left text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    Status
-                  </th>
+          {inquiries.length === 0 ? (
+            /* Empty state */
+            <div className="p-16 lg:p-24 text-center">
+              <div className="w-16 h-16 mx-auto mb-8 border border-[#0E0E0E] flex items-center justify-center text-[#0E0E0E]">
+                <Mail className="w-6 h-6" strokeWidth={1.5} />
+              </div>
 
-                  <th className="p-4 text-left text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    Date
-                  </th>
+              <h3 className="font-serif text-[1.75rem] lg:text-[2.25rem] font-normal tracking-[-0.01em] text-[#0E0E0E] mb-4">
+                No investment inquiries yet
+              </h3>
 
-                  <th className="p-4 text-right text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {inquiries.map((inquiry) => (
-                  <tr
-                    key={inquiry.id}
-                    className="border-b border-slate-100 last:border-0 dark:border-slate-800"
-                  >
-                    <td className="p-4">
-                      <div className="font-semibold text-slate-900 dark:text-white">
-                        {inquiry.name}
-                      </div>
-
-                      <div className="mt-1 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                        <Mail className="h-4 w-4" />
-                        {inquiry.email}
-                      </div>
-
-                      <div className="mt-1 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                        <Phone className="h-4 w-4" />
-                        {inquiry.phone}
-                      </div>
-                    </td>
-
-                    <td className="p-4">
-                      <div className="font-medium text-slate-900 dark:text-white">
-                        {inquiry.investmentOpportunity.title}
-                      </div>
-                    </td>
-
-                    <td className="p-4 text-slate-700 dark:text-slate-300">
-                      {inquiry.amountInterested
-                        ? `KSh ${Number(
-                            inquiry.amountInterested
-                          ).toLocaleString()}`
-                        : 'Not specified'}
-                    </td>
-
-                    <td className="p-4">
-                      <span
-                        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                          inquiry.status === 'NEW'
-                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                            : inquiry.status === 'CONTACTED'
-                              ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                              : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+              <p className="text-[0.95rem] leading-[1.85] text-[#0E0E0E]/60 max-w-md mx-auto">
+                Investor inquiries submitted through investment detail pages will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                {/* Header */}
+                <thead className="border-b border-[var(--line)]">
+                  <tr>
+                    {[
+                      { label: 'Investor', align: 'left' },
+                      { label: 'Investment', align: 'left' },
+                      { label: 'Amount', align: 'left' },
+                      { label: 'Status', align: 'left' },
+                      { label: 'Date', align: 'left' },
+                      { label: 'Action', align: 'right' },
+                    ].map((col, i) => (
+                      <th
+                        key={i}
+                        className={`px-6 lg:px-8 py-5 label-inst text-[#0E0E0E]/45 ${
+                          col.align === 'right' ? 'text-right' : 'text-left'
                         }`}
                       >
-                        {inquiry.status}
-                      </span>
-                    </td>
-
-                    <td className="p-4 text-sm text-slate-600 dark:text-slate-400">
-                      {new Date(inquiry.createdAt).toLocaleDateString()}
-                    </td>
-
-                    <td className="p-4 text-right">
-                      <Link
-                        href={`/admin/inquiries/${inquiry.id}`}
-                        className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-                      >
-                        <Eye className="h-4 w-4" />
-                        View
-                      </Link>
-                    </td>
+                        {col.label}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+
+                {/* Body */}
+                <tbody>
+                  {inquiries.map((inquiry, idx) => (
+                    <tr
+                      key={inquiry.id}
+                      className="border-b border-[var(--line)] last:border-b-0 hover:bg-[#F2F0EB]/50 transition-colors duration-300 anim-fade-up"
+                      style={{ animationDelay: `${Math.min(idx * 0.04, 0.4)}s` }}
+                    >
+                      {/* Investor */}
+                      <td className="px-6 lg:px-8 py-6 align-top">
+                        <div className="font-serif text-base font-normal text-[#0E0E0E] mb-3">
+                          {inquiry.name}
+                        </div>
+
+                        <div className="flex items-center gap-3 label-inst-sm text-[#0E0E0E]/50 mb-2">
+                          <Mail className="w-3 h-3 text-[#B01E28]" strokeWidth={1.75} />
+                          <span className="normal-case tracking-normal text-[0.75rem] font-mono">{inquiry.email}</span>
+                        </div>
+
+                        <div className="flex items-center gap-3 label-inst-sm text-[#0E0E0E]/50">
+                          <Phone className="w-3 h-3 text-[#B01E28]" strokeWidth={1.75} />
+                          <span className="normal-case tracking-normal text-[0.75rem] font-mono">{inquiry.phone}</span>
+                        </div>
+                      </td>
+
+                      {/* Investment */}
+                      <td className="px-6 lg:px-8 py-6 align-top">
+                        <span className="font-serif text-base font-normal text-[#0E0E0E]">
+                          {inquiry.investmentOpportunity.title}
+                        </span>
+                      </td>
+
+                      {/* Amount */}
+                      <td className="px-6 lg:px-8 py-6 align-top">
+                        <span className="font-mono text-[0.8rem] text-[#0E0E0E]/85">
+                          {inquiry.amountInterested
+                            ? `KSh ${Number(inquiry.amountInterested).toLocaleString()}`
+                            : 'Not specified'}
+                        </span>
+                      </td>
+
+                      {/* Status — institutional chip */}
+                      <td className="px-6 lg:px-8 py-6 align-top">
+                        <span
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 label-inst-sm border ${
+                            inquiry.status === 'NEW'
+                              ? 'border-[#B01E28]/40 text-[#B01E28] bg-[#B01E28]/[0.04]'
+                              : inquiry.status === 'CONTACTED'
+                                ? 'border-[#0E0E0E]/30 text-[#0E0E0E]/70 bg-[#F2F0EB]'
+                                : 'border-[#0E0E0E]/20 text-[#0E0E0E]/50 bg-transparent'
+                          }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 ${
+                              inquiry.status === 'NEW'
+                                ? 'bg-[#B01E28] rounded-full anim-blink'
+                                : inquiry.status === 'CONTACTED'
+                                  ? 'bg-[#0E0E0E]/50 rounded-full'
+                                  : 'bg-[#0E0E0E]/30 rounded-full'
+                            }`}
+                          />
+                          {inquiry.status}
+                        </span>
+                      </td>
+
+                      {/* Date */}
+                      <td className="px-6 lg:px-8 py-6 align-top">
+                        <span className="font-mono text-[0.75rem] text-[#0E0E0E]/55 whitespace-nowrap">
+                          {new Date(inquiry.createdAt).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </span>
+                      </td>
+
+                      {/* Action */}
+                      <td className="px-6 lg:px-8 py-6 align-top text-right">
+                        <Link
+                          href={`/admin/inquiries/${inquiry.id}`}
+                          className="group inline-flex items-center gap-3 border border-[#0E0E0E] hover:bg-[#0E0E0E] hover:text-white text-[#0E0E0E] label-inst-sm px-4 py-2.5 transition-colors duration-500"
+                        >
+                          <Eye className="w-3 h-3" strokeWidth={1.75} />
+                          <span>View</span>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
