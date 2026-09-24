@@ -87,7 +87,7 @@ export default function Navbar() {
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-10 h-9 flex items-center justify-between">
           <div className="flex items-center gap-6 nav-label-sm text-white/60">
-            <span className="text-white/85">Ndegwa Investments</span>
+            <span className="text-white/85">PY Capital</span>
             <span className="w-px h-3 bg-white/20" />
             <span>Private Markets · East Africa</span>
           </div>
@@ -110,10 +110,10 @@ export default function Navbar() {
         {/* Wordmark */}
         <Link href="/" className="flex items-baseline gap-3 group">
           <span className="nav-serif text-[1.6rem] font-medium tracking-tight text-[#0E0E0E]">
-            Ndegwa
+            PY
           </span>
           <span className="hidden sm:inline nav-label text-[#0E0E0E]/50 group-hover:text-[#B01E28] transition-colors duration-300">
-            Investments
+            Capital
           </span>
         </Link>
 

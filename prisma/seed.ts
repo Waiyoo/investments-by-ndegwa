@@ -55,7 +55,7 @@ async function main() {
     update: {},
     create: {
       id: 'default-settings',
-      companyName: 'Ndegwa Investments',
+      companyName: 'PY Capital',
       phone: '0799357038',
       internationalPhone: '+254 799 357 038',
       location: 'Nairobi, Kenya',

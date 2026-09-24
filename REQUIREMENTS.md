@@ -4,12 +4,12 @@
 
 ```markdown
 # Software Requirements Specification (SRS)
-## Ndegwa Investments Platform
+## PY Capital Platform
 
 ---
 
 ### 1. Project Overview
-Ndegwa Investments is a professional wealth management and investment opportunity portal built for the Kenyan and international investor market. Headquartered in Nairobi, Kenya, the firm connects capital with vetted high-yield opportunities across real estate, private equity, fixed income, agriculture, and energy.
+PY Capital is a professional wealth management and investment opportunity portal built for the Kenyan and international investor market. Headquartered in Nairobi, Kenya, the firm connects capital with vetted high-yield opportunities across real estate, private equity, fixed income, agriculture, and energy.
 
 ### 2. Objectives
 - Provide a transparent, high-performance digital catalog of investment opportunities.
@@ -107,7 +107,7 @@ This system explicitly **DOES NOT**:
 ---
 
 ### 10. Company Information
-- **Company Name:** Ndegwa Investments
+- **Company Name:** PY Capital
 - **Contact Numbers:** 0799357038, +254 799 357 038
 - **Location:** Nairobi, Kenya
 - **Currency:** KSh

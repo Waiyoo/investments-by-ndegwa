@@ -28,13 +28,13 @@ export async function sendInquiryNotificationEmails(
     : 'Not specified'
 
   const investorHtml = `
-    <h2>Ndegwa Investments — Inquiry Received</h2>
+    <h2>PY Capital — Inquiry Received</h2>
     <p>Dear ${escapeHtml(data.investorName)},</p>
     <p>Thank you for expressing interest in the following investment opportunity:</p>
     <p><strong>${escapeHtml(data.investmentTitle)}</strong></p>
     <p><strong>Amount of interest:</strong> ${escapeHtml(amount)}</p>
     <p>Our team will review your inquiry and contact you shortly.</p>
-    <p>Regards,<br>Ndegwa Investments<br>+254 799 357 038<br>Nairobi, Kenya</p>
+    <p>Regards,<br>PY Capital<br>+254 799 357 038<br>Nairobi, Kenya</p>
   `
 
   const adminHtml = `

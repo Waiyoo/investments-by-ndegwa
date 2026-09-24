@@ -19,7 +19,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ]
 
   return (
-    <div className="min-h-screen bg-[#FBFBF9] text-[#0E0E0E] flex flex-col lg:flex-row overflow-x-hidden antialiased">
+    <div className="min-h-screen bg-[#FAF7F2] text-[#1F1A15] flex flex-col lg:flex-row overflow-x-hidden antialiased">
 
       {/* =========================================================================
           GLOBAL STYLES — Institutional Admin System
@@ -34,14 +34,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
             :root {
-              --red: #B01E28;
-              --red-deep: #7A1219;
-              --ink: #0E0E0E;
-              --ink-soft: #1A1A1A;
-              --paper: #FBFBF9;
-              --bone: #F2F0EB;
-              --line: rgba(14,14,14,0.10);
-              --line-strong: rgba(14,14,14,0.20);
+              --accent: #A8763E;
+              --accent-deep: #7A5222;
+              --accent-soft: #C9A46A;
+              --ink: #1F1A15;
+              --ink-soft: #2B241D;
+              --paper: #FAF7F2;
+              --bone: #F1EBE1;
+              --dark: #231C16;
+              --line: rgba(31,26,21,0.10);
+              --line-strong: rgba(31,26,21,0.20);
             }
 
             @keyframes blink {
@@ -69,9 +71,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             }
 
             ::-webkit-scrollbar { width: 10px; height: 10px; }
-            ::-webkit-scrollbar-track { background: #FBFBF9; }
-            ::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.22); }
-            ::-webkit-scrollbar-thumb:hover { background: #B01E28; }
+            ::-webkit-scrollbar-track { background: #FAF7F2; }
+            ::-webkit-scrollbar-thumb { background: rgba(31,26,21,0.22); }
+            ::-webkit-scrollbar-thumb:hover { background: #A8763E; }
           `,
         }}
       />
@@ -79,7 +81,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* =========================================================================
           SIDEBAR — INSTITUTIONAL NAV (Dark)
           ========================================================================= */}
-      <aside className="w-full lg:w-72 bg-[#0E0E0E] text-white flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen">
+      <aside className="w-full lg:w-72 bg-[#231C16] text-white flex flex-col justify-between shrink-0 lg:sticky lg:top-0 lg:h-screen">
 
         {/* Wordmark block */}
         <div>
@@ -93,7 +95,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </span>
             </Link>
             <div className="flex items-center gap-2 mt-4">
-              <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+              <span className="w-1.5 h-1.5 bg-[#A8763E] rounded-full anim-blink" />
               <span className="label-inst-sm text-white/40">
                 Management Portal
               </span>
@@ -115,10 +117,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   href={item.href}
                   className="group relative flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:bg-white/[0.04] hover:text-white transition-colors duration-300"
                 >
-                  {/* Left red accent on hover */}
-                  <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#B01E28] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Left accent on hover */}
+                  <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#A8763E] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  <Icon className="w-4 h-4 text-white/50 group-hover:text-[#B01E28] transition-colors duration-300" strokeWidth={1.5} />
+                  <Icon className="w-4 h-4 text-white/50 group-hover:text-[#C9A46A] transition-colors duration-300" strokeWidth={1.5} />
 
                   <span className="font-medium">{item.name}</span>
                 </Link>
@@ -137,8 +139,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               href="/admin/settings"
               className="group relative flex items-center gap-3 px-4 py-3 text-sm text-white/60 hover:bg-white/[0.04] hover:text-white transition-colors duration-300"
             >
-              <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#B01E28] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Settings className="w-4 h-4 text-white/50 group-hover:text-[#B01E28] transition-colors duration-300" strokeWidth={1.5} />
+              <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#A8763E] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <Settings className="w-4 h-4 text-white/50 group-hover:text-[#C9A46A] transition-colors duration-300" strokeWidth={1.5} />
               <span className="font-medium">Settings</span>
             </Link>
           </nav>
@@ -149,20 +151,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link
             href="/"
             target="_blank"
-            className="group flex items-center justify-between gap-3 border border-white/20 hover:border-white/40 hover:bg-white/[0.04] text-white/85 label-inst-sm px-4 py-3.5 transition-colors duration-300 w-full"
+            className="group flex items-center justify-between gap-3 border border-white/20 hover:border-[#C9A46A]/60 hover:bg-white/[0.04] text-white/85 label-inst-sm px-4 py-3.5 transition-colors duration-300 w-full"
           >
             <span className="flex items-center gap-3">
-              <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+              <span className="w-1.5 h-1.5 bg-[#A8763E] rounded-full anim-blink" />
               <span>View Live Website</span>
             </span>
-            <span className="font-mono text-white/50 group-hover:text-white transition-colors duration-300">
+            <span className="font-mono text-white/50 group-hover:text-[#C9A46A] transition-colors duration-300">
               →
             </span>
           </Link>
 
           {/* Session status */}
           <div className="flex items-center gap-3 mt-4 px-1">
-            <ShieldCheck className="w-3 h-3 text-[#B01E28]" strokeWidth={1.75} />
+            <ShieldCheck className="w-3 h-3 text-[#C9A46A]" strokeWidth={1.75} />
             <span className="label-inst-sm text-white/35">
               {session ? 'Authenticated' : 'Guest Session'}
             </span>

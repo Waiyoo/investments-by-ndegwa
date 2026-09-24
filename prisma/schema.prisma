@@ -172,7 +172,7 @@ model InvestmentInquiry {
 
 model SiteSettings {
   id                 String   @id @default(uuid())
-  companyName        String   @default("Ndegwa Investments")
+  companyName        String   @default("PY Capital")
   phone              String   @default("0799357038")
   internationalPhone String   @default("+254 799 357 038")
   location           String   @default("Nairobi, Kenya")

@@ -30,8 +30,8 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://ndegwa-investments.co.ke'),
   title: {
-    default: 'Ndegwa Investments | Curated Investment Opportunities in East Africa',
-    template: '%s | Ndegwa Investments',
+    default: 'PY Capital | Curated Investment Opportunities in East Africa',
+    template: '%s | PY Capital',
   },
   description: 'Connecting discerning investors with vetted commercial, real estate, and agricultural investment opportunities in Kenya and East Africa.',
   keywords: ['investments', 'Kenya', 'East Africa', 'real estate', 'agriculture', 'wealth management', 'business opportunities'],
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_KE',
     url: 'https://ndegwa-investments.co.ke',
-    siteName: 'Ndegwa Investments',
-    title: 'Ndegwa Investments | Curated Opportunities',
+    siteName: 'PY Capital',
+    title: 'PY Capital | Curated Opportunities',
     description: 'Vetted investment opportunities connecting capital with high-potential ventures.',
   },
 }

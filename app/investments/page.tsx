@@ -2,6 +2,7 @@
 import { getPublicInvestments } from '@/app/actions/public'
 import { prisma } from '@/lib/db/prisma'
 import Link from 'next/link'
+import Footer from '@/components/public/footer'
 import {
   Search,
   Filter,
@@ -57,7 +58,7 @@ export default async function InvestmentsPage({
   ].filter(Boolean).length
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FBFBF9] text-[#0E0E0E] overflow-x-hidden antialiased">
+    <div className="flex flex-col min-h-screen bg-[#FAF7F2] text-[#1F1A15] overflow-x-hidden antialiased">
 
       {/* =========================================================================
           GLOBAL STYLES — Institutional Design System
@@ -72,14 +73,16 @@ export default async function InvestmentsPage({
             .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
             :root {
-              --red: #B01E28;
-              --red-deep: #7A1219;
-              --ink: #0E0E0E;
-              --ink-soft: #1A1A1A;
-              --paper: #FBFBF9;
-              --bone: #F2F0EB;
-              --line: rgba(14,14,14,0.10);
-              --line-strong: rgba(14,14,14,0.20);
+              --accent: #A8763E;
+              --accent-deep: #7A5222;
+              --accent-soft: #C9A46A;
+              --ink: #1F1A15;
+              --ink-soft: #2B241D;
+              --paper: #FAF7F2;
+              --bone: #F1EBE1;
+              --dark: #231C16;
+              --line: rgba(31,26,21,0.10);
+              --line-strong: rgba(31,26,21,0.20);
             }
 
             @keyframes fadeUp {
@@ -129,9 +132,9 @@ export default async function InvestmentsPage({
               background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
             }
 
-            /* Institutional image treatment */
-            .img-inst { filter: saturate(0.55) contrast(1.02) brightness(0.98); }
-            .img-inst-hero { filter: saturate(0.5) contrast(1.05) brightness(0.88); }
+            /* Institutional image treatment — warmed */
+            .img-inst { filter: saturate(0.65) contrast(1.02) brightness(0.98) sepia(0.08); }
+            .img-inst-hero { filter: saturate(0.55) contrast(1.05) brightness(0.85) sepia(0.12); }
 
             /* Institutional label */
             .label-inst {
@@ -158,20 +161,20 @@ export default async function InvestmentsPage({
               overflow: hidden;
             }
 
-            /* Custom select arrow */
+            /* Custom select arrow — warmed */
             .select-inst {
               appearance: none;
               -webkit-appearance: none;
-              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23B01E28' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23A8763E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
               background-repeat: no-repeat;
               background-position: right 1.15rem center;
               padding-right: 2.75rem;
             }
 
             ::-webkit-scrollbar { width: 10px; height: 10px; }
-            ::-webkit-scrollbar-track { background: #FBFBF9; }
-            ::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.22); }
-            ::-webkit-scrollbar-thumb:hover { background: #B01E28; }
+            ::-webkit-scrollbar-track { background: #FAF7F2; }
+            ::-webkit-scrollbar-thumb { background: rgba(31,26,21,0.22); }
+            ::-webkit-scrollbar-thumb:hover { background: #A8763E; }
           `,
         }}
       />
@@ -179,17 +182,17 @@ export default async function InvestmentsPage({
       {/* =========================================================================
           1. PAGE HEADER — INSTITUTIONAL DISCOVERY PORTAL
           ========================================================================= */}
-      <section className="relative bg-[#0E0E0E] text-white overflow-hidden">
+      <section className="relative bg-[#231C16] text-white overflow-hidden">
 
         {/* Background image — corporate architecture */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2600&q=90"
             alt=""
-            className="w-full h-full object-cover opacity-[0.20] img-inst-hero anim-slow-pan"
+            className="w-full h-full object-cover opacity-[0.22] img-inst-hero anim-slow-pan"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0E0E0E] via-[#0E0E0E]/88 to-[#0E0E0E]/55" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E] via-transparent to-[#0E0E0E]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#231C16] via-[#231C16]/88 to-[#231C16]/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#231C16] via-transparent to-[#231C16]/40" />
         </div>
 
         <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 pt-32 lg:pt-40 pb-16 lg:pb-20">
@@ -197,13 +200,13 @@ export default async function InvestmentsPage({
           {/* Top bar */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 mb-12 border-b border-white/12 anim-fade-up">
             <div className="flex items-center gap-4">
-              <span className="w-10 h-px bg-[#B01E28]" />
+              <span className="w-10 h-px bg-[#A8763E]" />
               <span className="label-inst text-white/60">
                 Discovery Portal · Live Opportunities
               </span>
             </div>
             <div className="flex items-center gap-3 label-inst text-white/45">
-              <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+              <span className="w-1.5 h-1.5 bg-[#A8763E] rounded-full anim-blink" />
               Updated Continuously
             </div>
           </div>
@@ -212,7 +215,7 @@ export default async function InvestmentsPage({
           <div className="grid grid-cols-12 gap-8">
             <div className="col-span-12 lg:col-span-8">
               <h1 className="font-serif font-light text-white text-[2.75rem] sm:text-[4rem] lg:text-[5.5rem] leading-[1.02] tracking-[-0.02em] mb-8 max-w-[20ch] anim-fade-up d-1">
-                Investment <em className="italic font-normal text-[#B01E28]">opportunities</em>.
+                Investment <em className="italic font-normal text-[#C9A46A]">opportunities</em>.
               </h1>
 
               <p className="text-lg lg:text-xl text-white/70 leading-[1.75] font-light max-w-[56ch] anim-fade-up d-3">
@@ -226,7 +229,7 @@ export default async function InvestmentsPage({
       {/* =========================================================================
           2. KEY STATS STRIP
           ========================================================================= */}
-      <section className="bg-[#FBFBF9] border-b border-[var(--line)]">
+      <section className="bg-[#FAF7F2] border-b border-[var(--line)]">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-[var(--line)]">
             {[
@@ -240,10 +243,10 @@ export default async function InvestmentsPage({
                 className="py-10 px-6 lg:px-8 anim-fade-up"
                 style={{ animationDelay: `${0.1 + i * 0.1}s` }}
               >
-                <span className="font-serif text-3xl lg:text-[2.25rem] font-light text-[#0E0E0E] block mb-3 tracking-[-0.02em]">
+                <span className="font-serif text-3xl lg:text-[2.25rem] font-light text-[#1F1A15] block mb-3 tracking-[-0.02em]">
                   {s.v}
                 </span>
-                <span className="label-inst text-[#0E0E0E]/45">{s.k}</span>
+                <span className="label-inst text-[#1F1A15]/45">{s.k}</span>
               </div>
             ))}
           </div>
@@ -253,14 +256,14 @@ export default async function InvestmentsPage({
       {/* =========================================================================
           3. MARQUEE STRIP
           ========================================================================= */}
-      <div className="bg-[#0E0E0E] text-white border-b border-white/10 py-5 overflow-hidden">
+      <div className="bg-[#231C16] text-white border-b border-white/10 py-5 overflow-hidden">
         <div className="flex whitespace-nowrap anim-marquee-slow w-max label-inst text-white/35">
           {[0, 1].map((dup) => (
             <div key={dup} className="flex items-center">
-              {['Real Estate', 'Agriculture', 'Commercial', 'Private Equity', 'Sustainable Growth', 'Nairobi · Kenya'].map((item) => (
+              {['Curated Opportunities', 'Institutional Grade', 'Direct Engagement', 'Vetted Documentation', 'East Africa', 'Nairobi · Kenya'].map((item) => (
                 <span key={item} className="flex items-center">
                   <span className="px-10">{item}</span>
-                  <span className="w-1 h-1 rounded-full bg-[#B01E28]" />
+                  <span className="w-1 h-1 rounded-full bg-[#A8763E]" />
                 </span>
               ))}
             </div>
@@ -271,14 +274,14 @@ export default async function InvestmentsPage({
       {/* =========================================================================
           4. FILTER BAR — INSTITUTIONAL SEARCH
           ========================================================================= */}
-      <section className="relative bg-[#FBFBF9] py-16 lg:py-20 border-b border-[var(--line)] overflow-hidden">
+      <section className="relative bg-[#FAF7F2] py-16 lg:py-20 border-b border-[var(--line)] overflow-hidden">
 
         {/* Ghosted executive image */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80"
             alt=""
-            className="w-full h-full object-cover opacity-[0.03] img-inst anim-slow-pan"
+            className="w-full h-full object-cover opacity-[0.04] img-inst anim-slow-pan"
           />
         </div>
 
@@ -287,16 +290,16 @@ export default async function InvestmentsPage({
           {/* Section header */}
           <div className="grid grid-cols-12 gap-8 mb-12 items-end">
             <div className="col-span-12 lg:col-span-3">
-              <span className="label-inst text-[#0E0E0E]/45 block mb-4">01 — Filter & Refine</span>
-              <span className="w-10 h-px bg-[#B01E28] block" />
+              <span className="label-inst text-[#1F1A15]/45 block mb-4">01 — Filter & Refine</span>
+              <span className="w-10 h-px bg-[#A8763E] block" />
             </div>
             <div className="col-span-12 lg:col-span-9 flex flex-wrap items-end justify-between gap-6">
-              <h2 className="font-serif font-light text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-[1.05] tracking-[-0.02em] text-[#0E0E0E] max-w-[24ch]">
-                Refine your <em className="italic font-normal text-[#B01E28]">search</em>.
+              <h2 className="font-serif font-light text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-[1.05] tracking-[-0.02em] text-[#1F1A15] max-w-[24ch]">
+                Refine your <em className="italic font-normal text-[#A8763E]">search</em>.
               </h2>
 
               {activeFilterCount > 0 && (
-                <span className="inline-flex items-center gap-3 label-inst text-[#B01E28] border border-[#B01E28]/40 px-4 py-2.5 bg-[#B01E28]/5">
+                <span className="inline-flex items-center gap-3 label-inst text-[#7A5222] border border-[#A8763E]/40 px-4 py-2.5 bg-[#A8763E]/[0.06]">
                   <SlidersHorizontal className="w-3.5 h-3.5" strokeWidth={1.5} />
                   {activeFilterCount} {activeFilterCount === 1 ? 'Filter' : 'Filters'} Active
                 </span>
@@ -309,19 +312,19 @@ export default async function InvestmentsPage({
             method="GET"
             className="relative bg-white border border-[var(--line)] p-6 lg:p-8 anim-fade-up"
           >
-            {/* Top red hairline */}
-            <div className="absolute top-0 left-0 w-24 h-px bg-[#B01E28]" />
+            {/* Top accent hairline */}
+            <div className="absolute top-0 left-0 w-24 h-px bg-[#A8763E]" />
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
 
               {/* Search */}
               <div className="relative md:col-span-1">
-                <label className="label-inst-sm text-[#0E0E0E]/45 block mb-3">
+                <label className="label-inst-sm text-[#1F1A15]/45 block mb-3">
                   Search
                 </label>
                 <div className="relative">
                   <Search
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B01E28] pointer-events-none"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8763E] pointer-events-none"
                     strokeWidth={1.5}
                   />
                   <input
@@ -329,20 +332,20 @@ export default async function InvestmentsPage({
                     name="search"
                     defaultValue={queryParams.search || ''}
                     placeholder="Search opportunities..."
-                    className="w-full pl-11 pr-4 py-3.5 bg-[#F2F0EB] border border-transparent text-sm text-[#0E0E0E] placeholder-[#0E0E0E]/35 focus:outline-none focus:border-[#B01E28] focus:bg-white transition-all duration-300"
+                    className="w-full pl-11 pr-4 py-3.5 bg-[#F1EBE1] border border-transparent text-sm text-[#1F1A15] placeholder-[#1F1A15]/35 focus:outline-none focus:border-[#A8763E] focus:bg-white transition-all duration-300"
                   />
                 </div>
               </div>
 
               {/* Category */}
               <div>
-                <label className="label-inst-sm text-[#0E0E0E]/45 block mb-3">
+                <label className="label-inst-sm text-[#1F1A15]/45 block mb-3">
                   Category
                 </label>
                 <select
                   name="category"
                   defaultValue={queryParams.category || ''}
-                  className="select-inst w-full px-4 py-3.5 bg-[#F2F0EB] border border-transparent text-sm text-[#0E0E0E] focus:outline-none focus:border-[#B01E28] focus:bg-white transition-all duration-300 cursor-pointer"
+                  className="select-inst w-full px-4 py-3.5 bg-[#F1EBE1] border border-transparent text-sm text-[#1F1A15] focus:outline-none focus:border-[#A8763E] focus:bg-white transition-all duration-300 cursor-pointer"
                 >
                   <option value="">All Categories</option>
                   {categories.map((c: any) => (
@@ -353,13 +356,13 @@ export default async function InvestmentsPage({
 
               {/* Status */}
               <div>
-                <label className="label-inst-sm text-[#0E0E0E]/45 block mb-3">
+                <label className="label-inst-sm text-[#1F1A15]/45 block mb-3">
                   Status
                 </label>
                 <select
                   name="status"
                   defaultValue={queryParams.status || ''}
-                  className="select-inst w-full px-4 py-3.5 bg-[#F2F0EB] border border-transparent text-sm text-[#0E0E0E] focus:outline-none focus:border-[#B01E28] focus:bg-white transition-all duration-300 cursor-pointer"
+                  className="select-inst w-full px-4 py-3.5 bg-[#F1EBE1] border border-transparent text-sm text-[#1F1A15] focus:outline-none focus:border-[#A8763E] focus:bg-white transition-all duration-300 cursor-pointer"
                 >
                   <option value="">All Statuses</option>
                   {statuses.map((s: any) => (
@@ -370,20 +373,20 @@ export default async function InvestmentsPage({
 
               {/* Actions */}
               <div>
-                <label className="label-inst-sm text-[#0E0E0E]/45 block mb-3 opacity-0 select-none pointer-events-none" aria-hidden="true">
+                <label className="label-inst-sm text-[#1F1A15]/45 block mb-3 opacity-0 select-none pointer-events-none" aria-hidden="true">
                   &nbsp;
                 </label>
                 <div className="flex gap-3">
                   <button
                     type="submit"
-                    className="group/btn flex-1 inline-flex items-center justify-center gap-3 bg-[#B01E28] hover:bg-[#0E0E0E] text-white label-inst px-5 py-3.5 transition-colors duration-500"
+                    className="group/btn flex-1 inline-flex items-center justify-center gap-3 bg-[#A8763E] hover:bg-[#1F1A15] text-white label-inst px-5 py-3.5 transition-colors duration-500"
                   >
                     <Filter className="w-3.5 h-3.5" strokeWidth={1.75} />
                     Filter
                   </button>
                   <Link
                     href="/investments"
-                    className="inline-flex items-center justify-center bg-[#F2F0EB] hover:bg-[#0E0E0E] text-[#0E0E0E] hover:text-white label-inst px-5 py-3.5 border border-[var(--line)] hover:border-[#0E0E0E] transition-colors duration-500"
+                    className="inline-flex items-center justify-center bg-[#F1EBE1] hover:bg-[#1F1A15] text-[#1F1A15] hover:text-white label-inst px-5 py-3.5 border border-[var(--line)] hover:border-[#1F1A15] transition-colors duration-500"
                   >
                     Reset
                   </Link>
@@ -397,14 +400,14 @@ export default async function InvestmentsPage({
       {/* =========================================================================
           5. RESULTS GRID — INSTITUTIONAL PORTFOLIO
           ========================================================================= */}
-      <section className="relative bg-[#FBFBF9] py-20 lg:py-28 border-b border-[var(--line)] overflow-hidden">
+      <section className="relative bg-[#FAF7F2] py-20 lg:py-28 border-b border-[var(--line)] overflow-hidden">
 
         {/* Ghosted financial backdrop */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=2400&q=80"
             alt=""
-            className="w-full h-full object-cover opacity-[0.03] img-inst anim-slow-pan"
+            className="w-full h-full object-cover opacity-[0.04] img-inst anim-slow-pan"
           />
         </div>
 
@@ -413,20 +416,20 @@ export default async function InvestmentsPage({
           {/* Results header */}
           <div className="grid grid-cols-12 gap-8 mb-16 items-end">
             <div className="col-span-12 lg:col-span-9">
-              <span className="label-inst text-[#0E0E0E]/45 block mb-4">02 — Active Portfolio</span>
-              <span className="w-10 h-px bg-[#B01E28] block mb-6" />
-              <h2 className="font-serif font-light text-[2rem] sm:text-[2.75rem] lg:text-[3.5rem] leading-[1.05] tracking-[-0.02em] text-[#0E0E0E] max-w-[26ch]">
+              <span className="label-inst text-[#1F1A15]/45 block mb-4">02 — Active Portfolio</span>
+              <span className="w-10 h-px bg-[#A8763E] block mb-6" />
+              <h2 className="font-serif font-light text-[2rem] sm:text-[2.75rem] lg:text-[3.5rem] leading-[1.05] tracking-[-0.02em] text-[#1F1A15] max-w-[26ch]">
                 {investments.length === 0 ? (
-                  <>No <em className="italic font-normal text-[#B01E28]">matching</em> opportunities.</>
+                  <>No <em className="italic font-normal text-[#A8763E]">matching</em> opportunities.</>
                 ) : (
-                  <>{investments.length} {investments.length === 1 ? 'opportunity' : 'opportunities'} to <em className="italic font-normal text-[#B01E28]">explore</em>.</>
+                  <>{investments.length} {investments.length === 1 ? 'opportunity' : 'opportunities'} to <em className="italic font-normal text-[#A8763E]">explore</em>.</>
                 )}
               </h2>
             </div>
 
             <div className="col-span-12 lg:col-span-3 lg:text-right">
-              <div className="inline-flex items-center gap-3 label-inst text-[#0E0E0E]/55 border border-[var(--line)] px-4 py-2.5 bg-white">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#B01E28]" strokeWidth={1.5} />
+              <div className="inline-flex items-center gap-3 label-inst text-[#1F1A15]/55 border border-[var(--line)] px-4 py-2.5 bg-white">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#A8763E]" strokeWidth={1.5} />
                 Independently Vetted
               </div>
             </div>
@@ -435,24 +438,24 @@ export default async function InvestmentsPage({
           {/* Empty state */}
           {investments.length === 0 ? (
             <div className="relative bg-white border border-[var(--line)] p-16 lg:p-24 text-center anim-fade-up">
-              {/* Top red hairline */}
-              <div className="absolute top-0 left-0 w-24 h-px bg-[#B01E28]" />
+              {/* Top accent hairline */}
+              <div className="absolute top-0 left-0 w-24 h-px bg-[#A8763E]" />
 
-              <div className="w-16 h-16 mx-auto mb-8 border border-[#0E0E0E] flex items-center justify-center text-[#0E0E0E]">
+              <div className="w-16 h-16 mx-auto mb-8 border border-[#1F1A15] flex items-center justify-center text-[#1F1A15]">
                 <Search className="w-6 h-6" strokeWidth={1.5} />
               </div>
 
-              <h3 className="font-serif text-[1.75rem] lg:text-[2.25rem] font-normal tracking-[-0.01em] text-[#0E0E0E] mb-4">
+              <h3 className="font-serif text-[1.75rem] lg:text-[2.25rem] font-normal tracking-[-0.01em] text-[#1F1A15] mb-4">
                 No matching opportunities found
               </h3>
 
-              <p className="text-[0.95rem] leading-[1.85] text-[#0E0E0E]/60 max-w-md mx-auto mb-10">
+              <p className="text-[0.95rem] leading-[1.85] text-[#1F1A15]/60 max-w-md mx-auto mb-10">
                 Try adjusting your search criteria or clearing filters to view all active investment opportunities.
               </p>
 
               <Link
                 href="/investments"
-                className="group inline-flex items-center gap-4 bg-[#B01E28] hover:bg-[#0E0E0E] text-white label-inst px-8 py-4 transition-colors duration-500"
+                className="group inline-flex items-center gap-4 bg-[#A8763E] hover:bg-[#1F1A15] text-white label-inst px-8 py-4 transition-colors duration-500"
               >
                 Clear All Filters
                 <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.5} />
@@ -463,32 +466,32 @@ export default async function InvestmentsPage({
               {investments.map((inv: any, idx: number) => (
                 <article
                   key={inv.id}
-                  className="group relative bg-white border border-[var(--line)] flex flex-col anim-fade-up transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)]"
+                  className="group relative bg-white border border-[var(--line)] flex flex-col anim-fade-up transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(58,42,24,0.28)]"
                   style={{ animationDelay: `${Math.min(idx * 0.08, 0.5)}s` }}
                 >
-                  {/* Red hairline top that extends on hover */}
-                  <div className="absolute top-0 left-0 w-12 h-px bg-[#B01E28] group-hover:w-32 transition-all duration-700 z-10" />
+                  {/* Accent hairline top that extends on hover */}
+                  <div className="absolute top-0 left-0 w-12 h-px bg-[#A8763E] group-hover:w-32 transition-all duration-700 z-10" />
 
                   <div className="flex-1 flex flex-col p-8 lg:p-9">
 
                     {/* Category + location */}
                     <div className="flex items-center justify-between gap-3 mb-8">
-                      <span className="label-inst-sm text-[#B01E28] border border-[#B01E28]/30 px-3 py-1.5 bg-[#B01E28]/[0.04]">
+                      <span className="label-inst-sm text-[#7A5222] border border-[#A8763E]/40 px-3 py-1.5 bg-[#A8763E]/[0.06]">
                         {inv.category.name}
                       </span>
-                      <span className="flex items-center gap-2 label-inst-sm text-[#0E0E0E]/45">
-                        <MapPin className="w-3 h-3 text-[#B01E28]" strokeWidth={1.75} />
+                      <span className="flex items-center gap-2 label-inst-sm text-[#1F1A15]/45">
+                        <MapPin className="w-3 h-3 text-[#A8763E]" strokeWidth={1.75} />
                         {inv.location}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal leading-[1.2] tracking-[-0.01em] text-[#0E0E0E] mb-4 group-hover:text-[#B01E28] transition-colors duration-500">
+                    <h3 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal leading-[1.2] tracking-[-0.01em] text-[#1F1A15] mb-4 group-hover:text-[#A8763E] transition-colors duration-500">
                       {inv.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-sm leading-[1.75] text-[#0E0E0E]/60 line-clamp-2 mb-8">
+                    <p className="text-sm leading-[1.75] text-[#1F1A15]/60 line-clamp-2 mb-8">
                       {inv.shortDescription}
                     </p>
 
@@ -500,8 +503,8 @@ export default async function InvestmentsPage({
                       {/* Target capital */}
                       {inv.fundingTarget && (
                         <div className="flex justify-between items-baseline">
-                          <span className="label-inst-sm text-[#0E0E0E]/45">Target Capital</span>
-                          <span className="font-serif text-lg text-[#0E0E0E]">
+                          <span className="label-inst-sm text-[#1F1A15]/45">Target Capital</span>
+                          <span className="font-serif text-lg text-[#1F1A15]">
                             KSh {Number(inv.fundingTarget).toLocaleString()}
                           </span>
                         </div>
@@ -511,14 +514,14 @@ export default async function InvestmentsPage({
                       {inv.fundingProgress && (
                         <div className="space-y-3">
                           <div className="flex justify-between items-baseline">
-                            <span className="label-inst-sm text-[#0E0E0E]/45">Funding Progress</span>
-                            <span className="font-serif text-lg text-[#B01E28]">
+                            <span className="label-inst-sm text-[#1F1A15]/45">Funding Progress</span>
+                            <span className="font-serif text-lg text-[#A8763E]">
                               {inv.fundingProgress}%
                             </span>
                           </div>
-                          <div className="w-full bg-[#F2F0EB] h-1.5 relative overflow-hidden">
+                          <div className="w-full bg-[#F1EBE1] h-1.5 relative overflow-hidden">
                             <div
-                              className="absolute top-0 left-0 h-full bg-[#B01E28] transition-all duration-1000"
+                              className="absolute top-0 left-0 h-full bg-[#A8763E] transition-all duration-1000"
                               style={{ width: `${Math.min(Number(inv.fundingProgress), 100)}%` }}
                             />
                           </div>
@@ -527,11 +530,11 @@ export default async function InvestmentsPage({
 
                       {/* Return description */}
                       {inv.returnDescription && (
-                        <div className="border-l-2 border-[#B01E28] bg-[#B01E28]/[0.04] px-4 py-3">
-                          <span className="label-inst-sm text-[#B01E28] block mb-2">
+                        <div className="border-l-2 border-[#A8763E] bg-[#A8763E]/[0.06] px-4 py-3">
+                          <span className="label-inst-sm text-[#7A5222] block mb-2">
                             Projected Return
                           </span>
-                          <p className="text-xs leading-[1.7] text-[#0E0E0E]/75">
+                          <p className="text-xs leading-[1.7] text-[#1F1A15]/75">
                             {inv.returnDescription}
                           </p>
                         </div>
@@ -543,9 +546,9 @@ export default async function InvestmentsPage({
                   <div className="p-8 lg:p-9 pt-0">
                     <Link
                       href={`/investments/${inv.slug}`}
-                      className="group/cta flex items-center justify-between gap-4 bg-[#0E0E0E] group-hover:bg-[#B01E28] text-white label-inst px-5 py-4 transition-colors duration-500 w-full"
+                      className="group/cta flex items-center justify-between gap-4 bg-[#1F1A15] group-hover:bg-[#A8763E] text-white label-inst px-5 py-4 transition-colors duration-500 w-full"
                     >
-                      <span>View Details</span>
+                      <span>Reserve Deposit</span>
                       <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover/cta:translate-x-1" strokeWidth={1.5} />
                     </Link>
                   </div>
@@ -559,18 +562,18 @@ export default async function InvestmentsPage({
       {/* =========================================================================
           6. TRUST BAR — INSTITUTIONAL CREDIBILITY
           ========================================================================= */}
-      <section className="bg-[#0E0E0E] text-white border-b border-white/10">
+      <section className="bg-[#231C16] text-white border-b border-white/10">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10">
             {[
               { icon: ShieldCheck, k: 'Rigorous Vetting', v: '100%' },
               { icon: Award, k: 'Institutional Grade', v: 'Verified' },
               { icon: Globe, k: 'Local Expertise', v: 'Nairobi' },
-              { icon: TrendingUp, k: 'Vetted Pipeline', v: 'KSh 2.4B+' },
+              { icon: TrendingUp, k: 'Vetted Pipeline', v: 'On Record' },
             ].map((item, idx) => (
               <div key={idx} className="py-10 px-6 lg:px-8 group">
                 <div className="flex items-center justify-between mb-6">
-                  <item.icon className="w-5 h-5 text-[#B01E28]" strokeWidth={1.25} />
+                  <item.icon className="w-5 h-5 text-[#C9A46A]" strokeWidth={1.25} />
                   <span className="font-mono text-[0.65rem] text-white/35">
                     / 0{idx + 1}
                   </span>
@@ -588,16 +591,16 @@ export default async function InvestmentsPage({
       {/* =========================================================================
           7. CTA — FINAL CONVERSION
           ========================================================================= */}
-      <section className="relative bg-[#0E0E0E] text-white overflow-hidden">
+      <section className="relative bg-[#231C16] text-white overflow-hidden">
 
         {/* Executive meeting backdrop */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1542744094-3a31246264d0?auto=format&fit=crop&w=2400&q=85"
             alt=""
-            className="w-full h-full object-cover opacity-[0.20] img-inst-hero anim-slow-pan"
+            className="w-full h-full object-cover opacity-[0.22] img-inst-hero anim-slow-pan"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0E0E0E] via-[#0E0E0E]/88 to-[#0E0E0E]/55" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#231C16] via-[#231C16]/88 to-[#231C16]/55" />
         </div>
 
         <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
@@ -607,11 +610,11 @@ export default async function InvestmentsPage({
             <div className="col-span-12 lg:col-span-7">
               <div className="flex items-center gap-4 mb-10 anim-fade-up">
                 <span className="label-inst text-white/45">03 — Next Steps</span>
-                <span className="w-10 h-px bg-[#B01E28]" />
+                <span className="w-10 h-px bg-[#A8763E]" />
               </div>
 
               <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[4rem] leading-[1.05] tracking-[-0.02em] text-white max-w-[22ch] mb-8 anim-fade-up d-1">
-                Have questions about an <em className="italic font-normal text-[#B01E28]">opportunity</em>?
+                Have questions about an <em className="italic font-normal text-[#C9A46A]">opportunity</em>?
               </h2>
 
               <p className="text-lg leading-[1.75] text-white/70 font-light max-w-lg anim-fade-up d-3">
@@ -626,7 +629,7 @@ export default async function InvestmentsPage({
               <div className="flex flex-col gap-0">
                 <Link
                   href="/contact"
-                  className="group flex items-center justify-between gap-6 bg-[#B01E28] hover:bg-white hover:text-[#0E0E0E] text-white label-inst px-8 py-5 transition-colors duration-500"
+                  className="group flex items-center justify-between gap-6 bg-[#A8763E] hover:bg-white hover:text-[#1F1A15] text-white label-inst px-8 py-5 transition-colors duration-500"
                 >
                   <span>Contact Our Team</span>
                   <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" strokeWidth={1.5} />
@@ -645,113 +648,9 @@ export default async function InvestmentsPage({
       </section>
 
       {/* =========================================================================
-          8. FOOTER — INSTITUTIONAL MASTHEAD
+          8. FOOTER — SHARED COMPONENT
           ========================================================================= */}
-      <footer className="bg-[#0E0E0E] text-white border-t border-white/10">
-
-        {/* Top marquee */}
-        <div className="border-b border-white/10 py-5 overflow-hidden">
-          <div className="flex whitespace-nowrap anim-marquee-slow w-max label-inst text-white/30">
-            {[0, 1].map((dup) => (
-              <div key={dup} className="flex items-center">
-                {['Private Capital', 'Real Estate', 'Agriculture', 'Commercial', 'East Africa', 'Nairobi', 'MMXXVI'].map((item) => (
-                  <span key={item} className="flex items-center">
-                    <span className="px-10">{item}</span>
-                    <span className="w-1 h-1 rounded-full bg-[#B01E28]" />
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Masthead */}
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-16 lg:py-20">
-          <div className="grid grid-cols-12 gap-8 lg:gap-16">
-
-            <div className="col-span-12 lg:col-span-5">
-              <span className="font-serif text-3xl lg:text-[2.5rem] font-normal tracking-tight text-white block mb-6">
-                Ndegwa Investments
-              </span>
-              <p className="text-sm leading-[1.8] text-white/50 max-w-md mb-8">
-                A Nairobi-based private investment firm. Curated capital for considered growth across real estate, agriculture, and commercial sectors in Kenya.
-              </p>
-              <div className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
-                <span className="label-inst text-white/45">
-                  Vol. 01 · MMXXVI
-                </span>
-              </div>
-            </div>
-
-            <div className="col-span-12 lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
-              <div>
-                <span className="label-inst text-white/45 block mb-6">Firm</span>
-                <ul className="flex flex-col gap-4">
-                  {[
-                    { l: 'Home', h: '/' },
-                    { l: 'About', h: '/about' },
-                    { l: 'Contact', h: '/contact' },
-                  ].map((item) => (
-                    <li key={item.l}>
-                      <Link href={item.h} className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
-                        {item.l}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <span className="label-inst text-white/45 block mb-6">Platform</span>
-                <ul className="flex flex-col gap-4">
-                  {[
-                    { l: 'Opportunities', h: '/investments' },
-                    { l: 'Process', h: '/about' },
-                    { l: 'Standards', h: '/about' },
-                  ].map((item) => (
-                    <li key={item.l}>
-                      <Link href={item.h} className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
-                        {item.l}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <span className="label-inst text-white/45 block mb-6">Contact</span>
-                <ul className="flex flex-col gap-4">
-                  <li>
-                    <a href="tel:+254799357038" className="text-sm text-white/70 hover:text-[#B01E28] transition-colors">
-                      +254 799 357 038
-                    </a>
-                  </li>
-                  <li>
-                    <a href="mailto:advisory@ndegwainvestments.com" className="text-sm text-white/70 hover:text-[#B01E28] transition-colors break-all">
-                      advisory@ndegwainvestments.com
-                    </a>
-                  </li>
-                  <li className="text-sm text-white/50">
-                    Nairobi, Kenya
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-white/10">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <span className="label-inst text-white/35">
-              © 2026 Ndegwa Investments — All rights reserved
-            </span>
-            <div className="flex items-center gap-6 label-inst text-white/35">
-              <span>Nairobi · 01°17'S 36°49'E</span>
-              <span className="w-px h-3 bg-white/15" />
-              <span>EN</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </div>
   )

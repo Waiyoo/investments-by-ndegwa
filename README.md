@@ -1,11 +1,11 @@
-# Ndegwa Investments
+# PY Capital
 
-Ndegwa Investments is a professional, secure, full-stack wealth management and investment opportunity platform designed to showcase high-value investment portfolios, real estate, private equity, and fixed-income ventures. It enables institutional and retail investors to explore vetted opportunities, inspect financial metrics and legal documentation, and securely submit investment inquiries.
+PY Capital is a professional, secure, full-stack wealth management and investment opportunity platform designed to showcase high-value investment portfolios, real estate, private equity, and fixed-income ventures. It enables institutional and retail investors to explore vetted opportunities, inspect financial metrics and legal documentation, and securely submit investment inquiries.
 
 ## Project Purpose
 The platform bridges the gap between high-yield investment opportunities and prospective investors in Kenya and globally. It provides a transparent, responsive, and secure digital storefront for browsing investment assets while offering administrators a robust content management and CRM interface.
 
-## What Ndegwa Investments Does Through the Website
+## What PY Capital Does Through the Website
 - **Public Discovery:** Displays curated investment opportunities complete with financial targets, risk profiles, asset classifications, minimum commitments, projected returns, and progress indicators.
 - **Investor Engagement:** Allows prospective investors to submit structured inquiries regarding specific opportunities or general portfolio allocation.
 - **Secure Administration:** Provides a private admin portal for managing investment listings, asset metadata, investor inquiries, document attachments, and system configurations.

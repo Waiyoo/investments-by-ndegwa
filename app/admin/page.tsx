@@ -19,12 +19,12 @@ import {
 } from 'lucide-react'
 
 export const metadata = {
-  title: 'Admin Dashboard · Ndegwa Investments',
+  title: 'Admin Dashboard · PY Capital',
 }
 
 export default function AdminDashboardPage() {
   return (
-    <div className="flex min-h-screen bg-[#FBFBF9] text-[#0E0E0E] font-sans overflow-x-hidden antialiased">
+    <div className="flex min-h-screen bg-[#FAF7F2] text-[#1F1A15] font-sans overflow-x-hidden antialiased">
 
       {/* =========================================================================
           GLOBAL STYLES — Institutional Admin System
@@ -39,14 +39,16 @@ export default function AdminDashboardPage() {
             .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
             :root {
-              --red: #B01E28;
-              --red-deep: #7A1219;
-              --ink: #0E0E0E;
-              --ink-soft: #1A1A1A;
-              --paper: #FBFBF9;
-              --bone: #F2F0EB;
-              --line: rgba(14,14,14,0.10);
-              --line-strong: rgba(14,14,14,0.20);
+              --accent: #A8763E;
+              --accent-deep: #7A5222;
+              --accent-soft: #C9A46A;
+              --ink: #1F1A15;
+              --ink-soft: #2B241D;
+              --paper: #FAF7F2;
+              --bone: #F1EBE1;
+              --dark: #231C16;
+              --line: rgba(31,26,21,0.10);
+              --line-strong: rgba(31,26,21,0.20);
             }
 
             @keyframes fadeUp {
@@ -90,8 +92,8 @@ export default function AdminDashboardPage() {
 
             ::-webkit-scrollbar { width: 8px; height: 8px; }
             ::-webkit-scrollbar-track { background: transparent; }
-            ::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.20); }
-            ::-webkit-scrollbar-thumb:hover { background: #B01E28; }
+            ::-webkit-scrollbar-thumb { background: rgba(31,26,21,0.20); }
+            ::-webkit-scrollbar-thumb:hover { background: #A8763E; }
           `,
         }}
       />
@@ -99,7 +101,7 @@ export default function AdminDashboardPage() {
       {/* =========================================================================
           SIDEBAR — INSTITUTIONAL NAV
           ========================================================================= */}
-      <aside className="hidden lg:flex w-64 xl:w-72 flex-col bg-[#0E0E0E] text-white sticky top-0 h-screen border-r border-white/10">
+      <aside className="hidden lg:flex w-64 xl:w-72 flex-col bg-[#231C16] text-white sticky top-0 h-screen border-r border-white/10">
 
         {/* Wordmark */}
         <div className="px-6 py-6 border-b border-white/10">
@@ -134,9 +136,9 @@ export default function AdminDashboardPage() {
                   : 'text-white/60 hover:bg-white/[0.03] hover:text-white'
               }`}
             >
-              {/* Active red bar */}
+              {/* Active accent bar */}
               {item.active && (
-                <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#B01E28]" />
+                <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#A8763E]" />
               )}
               <span className="flex items-center gap-3">
                 <item.icon className="w-4 h-4" strokeWidth={1.5} />
@@ -146,8 +148,8 @@ export default function AdminDashboardPage() {
                 <span
                   className={`text-[10px] font-mono px-2 py-0.5 ${
                     item.active
-                      ? 'bg-[#B01E28] text-white'
-                      : 'bg-[#B01E28]/80 text-white'
+                      ? 'bg-[#A8763E] text-white'
+                      : 'bg-[#A8763E]/80 text-white'
                   }`}
                 >
                   {item.badge}
@@ -172,7 +174,7 @@ export default function AdminDashboardPage() {
         {/* User + Exit */}
         <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3 px-2 py-2">
-            <span className="w-9 h-9 border border-[#B01E28] flex items-center justify-center text-white text-[0.7rem] font-mono">
+            <span className="w-9 h-9 border border-[#A8763E] flex items-center justify-center text-white text-[0.7rem] font-mono">
               AD
             </span>
             <div className="flex-1 min-w-0">
@@ -186,7 +188,7 @@ export default function AdminDashboardPage() {
           </div>
           <Link
             href="/"
-            className="mt-3 flex items-center gap-2 px-2 py-2 text-[0.7rem] font-mono tracking-[0.15em] uppercase text-white/45 hover:text-[#B01E28] transition-colors duration-300"
+            className="mt-3 flex items-center gap-2 px-2 py-2 text-[0.7rem] font-mono tracking-[0.15em] uppercase text-white/45 hover:text-[#C9A46A] transition-colors duration-300"
           >
             <LogOut className="w-3 h-3" strokeWidth={1.5} />
             Exit to Public Site
@@ -200,7 +202,7 @@ export default function AdminDashboardPage() {
       <main className="flex-1 min-w-0">
 
         {/* Topbar */}
-        <header className="sticky top-0 z-30 bg-[#FBFBF9]/95 backdrop-blur-md border-b border-[var(--line)]">
+        <header className="sticky top-0 z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[var(--line)]">
           <div className="flex items-center justify-between gap-4 px-6 lg:px-10 h-16 lg:h-20">
 
             {/* Mobile logo */}
@@ -211,7 +213,7 @@ export default function AdminDashboardPage() {
               >
                 <Menu className="w-4 h-4" strokeWidth={1.5} />
               </button>
-              <span className="font-serif text-xl font-medium text-[#0E0E0E]">
+              <span className="font-serif text-xl font-medium text-[#1F1A15]">
                 Ndegwa
               </span>
             </div>
@@ -219,11 +221,11 @@ export default function AdminDashboardPage() {
             {/* Search */}
             <div className="hidden md:flex items-center gap-3 flex-1 max-w-md">
               <div className="relative w-full">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0E0E0E]/40" strokeWidth={1.5} />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1F1A15]/40" strokeWidth={1.5} />
                 <input
                   type="text"
                   placeholder="Search investments, inquiries…"
-                  className="w-full pl-11 pr-4 py-3 bg-white border border-[var(--line)] text-sm text-[#0E0E0E] placeholder:text-[#0E0E0E]/35 focus:outline-none focus:border-[#B01E28] transition-colors duration-300"
+                  className="w-full pl-11 pr-4 py-3 bg-white border border-[var(--line)] text-sm text-[#1F1A15] placeholder:text-[#1F1A15]/35 focus:outline-none focus:border-[#A8763E] transition-colors duration-300"
                 />
               </div>
             </div>
@@ -232,14 +234,14 @@ export default function AdminDashboardPage() {
             <div className="flex items-center gap-3">
               <button
                 aria-label="Notifications"
-                className="relative w-10 h-10 flex items-center justify-center border border-[var(--line)] hover:border-[#B01E28] hover:text-[#B01E28] text-[#0E0E0E] transition-colors duration-300"
+                className="relative w-10 h-10 flex items-center justify-center border border-[var(--line)] hover:border-[#A8763E] hover:text-[#A8763E] text-[#1F1A15] transition-colors duration-300"
               >
                 <Bell className="w-4 h-4" strokeWidth={1.5} />
-                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-[#A8763E] rounded-full anim-blink" />
               </button>
               <Link
                 href="/admin/investments/new"
-                className="hidden sm:inline-flex items-center gap-3 bg-[#B01E28] hover:bg-[#0E0E0E] text-white label-inst px-5 py-3 transition-colors duration-500"
+                className="hidden sm:inline-flex items-center gap-3 bg-[#A8763E] hover:bg-[#1F1A15] text-white label-inst px-5 py-3 transition-colors duration-500"
               >
                 <Plus className="w-3.5 h-3.5" strokeWidth={2} />
                 New Investment
@@ -255,19 +257,19 @@ export default function AdminDashboardPage() {
           <div className="grid grid-cols-12 gap-8 mb-16 items-end anim-fade-up">
             <div className="col-span-12 lg:col-span-8">
               <div className="flex items-center gap-4 mb-6">
-                <span className="label-inst text-[#0E0E0E]/45">01 — Dashboard</span>
-                <span className="w-10 h-px bg-[#B01E28]" />
+                <span className="label-inst text-[#1F1A15]/45">01 — Dashboard</span>
+                <span className="w-10 h-px bg-[#A8763E]" />
               </div>
-              <h1 className="font-serif font-light text-[2.5rem] sm:text-[3rem] lg:text-[3.5rem] leading-[1.02] tracking-[-0.02em] text-[#0E0E0E] mb-5">
+              <h1 className="font-serif font-light text-[2.5rem] sm:text-[3rem] lg:text-[3.5rem] leading-[1.02] tracking-[-0.02em] text-[#1F1A15] mb-5">
                 Welcome back.
               </h1>
-              <p className="text-[0.95rem] leading-[1.75] text-[#0E0E0E]/60 max-w-xl">
+              <p className="text-[0.95rem] leading-[1.75] text-[#1F1A15]/60 max-w-xl">
                 Manage your investment opportunities, monitor inquiries, and keep your publishing pipeline moving.
               </p>
             </div>
             <div className="col-span-12 lg:col-span-4 lg:text-right">
-              <span className="inline-flex items-center gap-3 label-inst text-[#0E0E0E]/60 border border-[var(--line)] px-4 py-2.5 bg-white">
-                <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+              <span className="inline-flex items-center gap-3 label-inst text-[#1F1A15]/60 border border-[var(--line)] px-4 py-2.5 bg-white">
+                <span className="w-1.5 h-1.5 bg-[#A8763E] rounded-full anim-blink" />
                 System Online
               </span>
             </div>
@@ -277,101 +279,101 @@ export default function AdminDashboardPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
 
             {/* Total investments */}
-            <div className="group bg-white border border-[var(--line)] p-8 anim-fade-up d-1 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)] relative">
-              <div className="absolute top-0 left-0 w-12 h-px bg-[#B01E28] group-hover:w-24 transition-all duration-700" />
+            <div className="group bg-white border border-[var(--line)] p-8 anim-fade-up d-1 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(58,42,24,0.28)] relative">
+              <div className="absolute top-0 left-0 w-12 h-px bg-[#A8763E] group-hover:w-24 transition-all duration-700" />
 
               <div className="flex items-center justify-between mb-8">
-                <Briefcase className="w-5 h-5 text-[#0E0E0E]" strokeWidth={1.5} />
-                <span className="label-inst-sm text-[#B01E28]">
+                <Briefcase className="w-5 h-5 text-[#1F1A15]" strokeWidth={1.5} />
+                <span className="label-inst-sm text-[#A8763E]">
                   +12%
                 </span>
               </div>
 
-              <span className="label-inst text-[#0E0E0E]/45 block mb-4">
+              <span className="label-inst text-[#1F1A15]/45 block mb-4">
                 Total Investments
               </span>
 
-              <span className="font-serif text-[2.75rem] lg:text-5xl font-light tracking-[-0.02em] text-[#0E0E0E] block mb-5">
+              <span className="font-serif text-[2.75rem] lg:text-5xl font-light tracking-[-0.02em] text-[#1F1A15] block mb-5">
                 24
               </span>
 
               <div className="pt-5 border-t border-[var(--line)] flex items-center justify-between">
-                <span className="label-inst-sm text-[#0E0E0E]/45">Published</span>
-                <span className="text-xs text-[#0E0E0E]/75 font-medium">18</span>
+                <span className="label-inst-sm text-[#1F1A15]/45">Published</span>
+                <span className="text-xs text-[#1F1A15]/75 font-medium">18</span>
               </div>
               <div className="pt-3 flex items-center justify-between">
-                <span className="label-inst-sm text-[#0E0E0E]/45">Drafts</span>
-                <span className="text-xs text-[#0E0E0E]/75 font-medium">6</span>
+                <span className="label-inst-sm text-[#1F1A15]/45">Drafts</span>
+                <span className="text-xs text-[#1F1A15]/75 font-medium">6</span>
               </div>
             </div>
 
             {/* Pending inquiries */}
-            <div className="group bg-white border border-[var(--line)] p-8 anim-fade-up d-2 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)] relative">
-              <div className="absolute top-0 left-0 w-12 h-px bg-[#B01E28] group-hover:w-24 transition-all duration-700" />
+            <div className="group bg-white border border-[var(--line)] p-8 anim-fade-up d-2 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(58,42,24,0.28)] relative">
+              <div className="absolute top-0 left-0 w-12 h-px bg-[#A8763E] group-hover:w-24 transition-all duration-700" />
 
               <div className="flex items-center justify-between mb-8">
-                <Users className="w-5 h-5 text-[#0E0E0E]" strokeWidth={1.5} />
-                <span className="label-inst-sm text-[#B01E28] flex items-center gap-1.5">
+                <Users className="w-5 h-5 text-[#1F1A15]" strokeWidth={1.5} />
+                <span className="label-inst-sm text-[#A8763E] flex items-center gap-1.5">
                   <Clock className="w-2.5 h-2.5" strokeWidth={2} />
                   Action
                 </span>
               </div>
 
-              <span className="label-inst text-[#0E0E0E]/45 block mb-4">
+              <span className="label-inst text-[#1F1A15]/45 block mb-4">
                 Pending Inquiries
               </span>
 
-              <span className="font-serif text-[2.75rem] lg:text-5xl font-light tracking-[-0.02em] text-[#0E0E0E] block mb-5">
+              <span className="font-serif text-[2.75rem] lg:text-5xl font-light tracking-[-0.02em] text-[#1F1A15] block mb-5">
                 07
               </span>
 
               <div className="pt-5 border-t border-[var(--line)] flex items-center justify-between">
-                <span className="label-inst-sm text-[#0E0E0E]/45">Today</span>
-                <span className="text-xs text-[#B01E28] font-medium">+3 new</span>
+                <span className="label-inst-sm text-[#1F1A15]/45">Today</span>
+                <span className="text-xs text-[#A8763E] font-medium">+3 new</span>
               </div>
               <div className="pt-3 flex items-center justify-between">
-                <span className="label-inst-sm text-[#0E0E0E]/45">This week</span>
-                <span className="text-xs text-[#0E0E0E]/75 font-medium">12</span>
+                <span className="label-inst-sm text-[#1F1A15]/45">This week</span>
+                <span className="text-xs text-[#1F1A15]/75 font-medium">12</span>
               </div>
             </div>
 
             {/* Vetted capital */}
-            <div className="group bg-white border border-[var(--line)] p-8 anim-fade-up d-3 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(14,14,14,0.28)] relative">
-              <div className="absolute top-0 left-0 w-12 h-px bg-[#B01E28] group-hover:w-24 transition-all duration-700" />
+            <div className="group bg-white border border-[var(--line)] p-8 anim-fade-up d-3 transition-shadow duration-500 hover:shadow-[0_24px_60px_-32px_rgba(58,42,24,0.28)] relative">
+              <div className="absolute top-0 left-0 w-12 h-px bg-[#A8763E] group-hover:w-24 transition-all duration-700" />
 
               <div className="flex items-center justify-between mb-8">
-                <TrendingUp className="w-5 h-5 text-[#0E0E0E]" strokeWidth={1.5} />
-                <span className="label-inst-sm text-[#B01E28]">
+                <TrendingUp className="w-5 h-5 text-[#1F1A15]" strokeWidth={1.5} />
+                <span className="label-inst-sm text-[#A8763E]">
                   +8%
                 </span>
               </div>
 
-              <span className="label-inst text-[#0E0E0E]/45 block mb-4">
+              <span className="label-inst text-[#1F1A15]/45 block mb-4">
                 Vetted Capital
               </span>
 
-              <span className="font-serif text-[2.25rem] lg:text-[2.5rem] font-light tracking-[-0.02em] text-[#0E0E0E] block mb-5">
+              <span className="font-serif text-[2.25rem] lg:text-[2.5rem] font-light tracking-[-0.02em] text-[#1F1A15] block mb-5">
                 KSh 2.4B
               </span>
 
               <div className="pt-5 border-t border-[var(--line)] flex items-center justify-between">
-                <span className="label-inst-sm text-[#0E0E0E]/45">Status</span>
-                <span className="text-xs text-[#0E0E0E]/75 font-medium">Active</span>
+                <span className="label-inst-sm text-[#1F1A15]/45">Status</span>
+                <span className="text-xs text-[#1F1A15]/75 font-medium">Active</span>
               </div>
               <div className="pt-3 flex items-center justify-between">
-                <span className="label-inst-sm text-[#0E0E0E]/45">Coverage</span>
-                <span className="text-xs text-[#0E0E0E]/75 font-medium">All listings</span>
+                <span className="label-inst-sm text-[#1F1A15]/45">Coverage</span>
+                <span className="text-xs text-[#1F1A15]/75 font-medium">All listings</span>
               </div>
             </div>
 
             {/* System status — dark card */}
-            <div className="group bg-[#0E0E0E] text-white border border-[#0E0E0E] p-8 anim-fade-up d-4 relative">
-              <div className="absolute top-0 left-0 w-12 h-px bg-[#B01E28] group-hover:w-24 transition-all duration-700" />
+            <div className="group bg-[#231C16] text-white border border-[#231C16] p-8 anim-fade-up d-4 relative">
+              <div className="absolute top-0 left-0 w-12 h-px bg-[#A8763E] group-hover:w-24 transition-all duration-700" />
 
               <div className="flex items-center justify-between mb-8">
                 <ShieldCheck className="w-5 h-5 text-white" strokeWidth={1.5} />
-                <span className="label-inst-sm text-[#B01E28] flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-[#B01E28] rounded-full anim-blink" />
+                <span className="label-inst-sm text-[#C9A46A] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-[#A8763E] rounded-full anim-blink" />
                   Live
                 </span>
               </div>
@@ -404,16 +406,16 @@ export default function AdminDashboardPage() {
               <div className="flex items-center justify-between px-8 py-6 border-b border-[var(--line)]">
                 <div>
                   <div className="flex items-center gap-4 mb-2">
-                    <span className="label-inst text-[#0E0E0E]/45">02 — Activity</span>
-                    <span className="w-8 h-px bg-[#B01E28]" />
+                    <span className="label-inst text-[#1F1A15]/45">02 — Activity</span>
+                    <span className="w-8 h-px bg-[#A8763E]" />
                   </div>
-                  <h2 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal tracking-[-0.01em] text-[#0E0E0E]">
+                  <h2 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal tracking-[-0.01em] text-[#1F1A15]">
                     Recent Activity
                   </h2>
                 </div>
                 <Link
                   href="/admin/activity"
-                  className="inline-flex items-center gap-2 label-inst-sm text-[#0E0E0E]/60 hover:text-[#B01E28] transition-colors duration-300"
+                  className="inline-flex items-center gap-2 label-inst-sm text-[#1F1A15]/60 hover:text-[#A8763E] transition-colors duration-300"
                 >
                   View all
                   <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.5} />
@@ -429,20 +431,20 @@ export default function AdminDashboardPage() {
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-5 px-8 py-5 hover:bg-[#F2F0EB]/50 transition-colors duration-300 group"
+                    className="flex items-center gap-5 px-8 py-5 hover:bg-[#F1EBE1]/50 transition-colors duration-300 group"
                   >
-                    <span className="w-10 h-10 border border-[var(--line)] flex items-center justify-center text-[#0E0E0E] flex-shrink-0 group-hover:border-[#B01E28] group-hover:text-[#B01E28] transition-colors duration-300">
+                    <span className="w-10 h-10 border border-[var(--line)] flex items-center justify-center text-[#1F1A15] flex-shrink-0 group-hover:border-[#A8763E] group-hover:text-[#A8763E] transition-colors duration-300">
                       <item.icon className="w-4 h-4" strokeWidth={1.5} />
                     </span>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-[#0E0E0E] truncate">
+                      <div className="text-sm font-medium text-[#1F1A15] truncate">
                         {item.title}
                       </div>
-                      <div className="text-xs font-mono text-[#0E0E0E]/45 truncate mt-1">
+                      <div className="text-xs font-mono text-[#1F1A15]/45 truncate mt-1">
                         {item.meta}
                       </div>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-[#0E0E0E]/30 flex-shrink-0 group-hover:text-[#B01E28] transition-colors duration-300" strokeWidth={1.5} />
+                    <ArrowUpRight className="w-4 h-4 text-[#1F1A15]/30 flex-shrink-0 group-hover:text-[#A8763E] transition-colors duration-300" strokeWidth={1.5} />
                   </div>
                 ))}
               </div>
@@ -453,10 +455,10 @@ export default function AdminDashboardPage() {
 
               <div className="px-8 py-6 border-b border-[var(--line)]">
                 <div className="flex items-center gap-4 mb-2">
-                  <span className="label-inst text-[#0E0E0E]/45">03 — Shortcuts</span>
-                  <span className="w-8 h-px bg-[#B01E28]" />
+                  <span className="label-inst text-[#1F1A15]/45">03 — Shortcuts</span>
+                  <span className="w-8 h-px bg-[#A8763E]" />
                 </div>
-                <h2 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal tracking-[-0.01em] text-[#0E0E0E]">
+                <h2 className="font-serif text-[1.5rem] lg:text-[1.75rem] font-normal tracking-[-0.01em] text-[#1F1A15]">
                   Quick Actions
                 </h2>
               </div>
@@ -473,8 +475,8 @@ export default function AdminDashboardPage() {
                     href={action.href}
                     className={`group flex items-center justify-between gap-3 px-5 py-4 text-sm font-medium transition-colors duration-500 ${
                       action.primary
-                        ? 'bg-[#B01E28] hover:bg-[#0E0E0E] text-white'
-                        : 'bg-[#F2F0EB] hover:bg-[#0E0E0E] text-[#0E0E0E] hover:text-white'
+                        ? 'bg-[#A8763E] hover:bg-[#1F1A15] text-white'
+                        : 'bg-[#F1EBE1] hover:bg-[#1F1A15] text-[#1F1A15] hover:text-white'
                     }`}
                   >
                     <span className="flex items-center gap-3">
@@ -487,7 +489,7 @@ export default function AdminDashboardPage() {
                           className={`text-[10px] font-mono px-2 py-0.5 ${
                             action.primary
                               ? 'bg-white/25 text-white'
-                              : 'bg-[#B01E28] text-white'
+                              : 'bg-[#A8763E] text-white'
                           }`}
                         >
                           {action.badge}
@@ -500,11 +502,11 @@ export default function AdminDashboardPage() {
               </div>
 
               {/* Tip — institutional */}
-              <div className="m-5 mt-0 bg-[#0E0E0E] text-white p-6 relative">
-                <div className="absolute top-0 left-0 w-12 h-px bg-[#B01E28]" />
+              <div className="m-5 mt-0 bg-[#231C16] text-white p-6 relative">
+                <div className="absolute top-0 left-0 w-12 h-px bg-[#A8763E]" />
                 <div className="flex items-center gap-2 mb-3">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#B01E28]" strokeWidth={1.5} />
-                  <span className="label-inst-sm text-[#B01E28]">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#C9A46A]" strokeWidth={1.5} />
+                  <span className="label-inst-sm text-[#C9A46A]">
                     Compliance Note
                   </span>
                 </div>
@@ -517,15 +519,15 @@ export default function AdminDashboardPage() {
 
           {/* Footer */}
           <div className="mt-16 pt-6 border-t border-[var(--line)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <span className="label-inst text-[#0E0E0E]/35">
-              © 2026 Ndegwa Investments — Admin Portal
+            <span className="label-inst text-[#1F1A15]/35">
+              © 2026 PY Capital — Admin Portal
             </span>
-            <div className="flex items-center gap-6 label-inst text-[#0E0E0E]/35">
+            <div className="flex items-center gap-6 label-inst text-[#1F1A15]/35">
               <span className="flex items-center gap-2">
-                <span className="w-1 h-1 bg-[#B01E28] rounded-full anim-blink" />
+                <span className="w-1 h-1 bg-[#A8763E] rounded-full anim-blink" />
                 Nairobi · KE
               </span>
-              <span className="w-px h-3 bg-[#0E0E0E]/15" />
+              <span className="w-px h-3 bg-[#1F1A15]/15" />
               <span>v1.0</span>
             </div>
           </div>
