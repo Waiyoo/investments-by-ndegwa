@@ -88,7 +88,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="px-6 py-6 border-b border-white/10">
             <Link href="/admin" className="flex items-baseline gap-3">
               <span className="font-serif text-[1.6rem] font-medium tracking-tight text-white">
-                Ndegwa
+                PY Capital
               </span>
               <span className="label-inst-sm text-white/50">
                 Admin

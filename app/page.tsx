@@ -649,7 +649,7 @@ export default async function HomePage() {
               <span className="w-10 h-px bg-[#A8763E] block mb-10" />
 
               <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.5rem] leading-[1.05] tracking-[-0.02em] text-[#1F1A15] mb-8 max-w-[16ch]">
-                Why partners choose <em className="italic font-normal text-[#A8763E]">Ndegwa</em>.
+                Why partners choose <em className="italic font-normal text-[#A8763E]">PY Capital</em>.
               </h2>
 
               <p className="text-[0.95rem] leading-[1.85] text-[#1F1A15]/65 mb-12 max-w-lg">
@@ -771,7 +771,7 @@ export default async function HomePage() {
                   <Phone className="w-4 h-4 text-[#C9A46A] mt-1 flex-shrink-0" strokeWidth={1.5} />
                   <div>
                     <span className="label-inst text-white/45 block mb-2">Advisory Desk</span>
-                    <span className="font-serif text-xl text-white">+254 799 357 038</span>
+                    <span className="font-serif text-xl text-white">+254 724 535 062</span>
                   </div>
                 </div>
 
@@ -874,8 +874,8 @@ export default async function HomePage() {
                 <span className="label-inst text-white/45 block mb-6">Contact</span>
                 <ul className="flex flex-col gap-4">
                   <li>
-                    <a href="tel:+254799357038" className="text-sm text-white/70 hover:text-[#C9A46A] transition-colors">
-                      +254 799 357 038
+                    <a href="tel:+254 724 535 062" className="text-sm text-white/70 hover:text-[#C9A46A] transition-colors">
+                      +254 724 535 062
                     </a>
                   </li>
                   <li>

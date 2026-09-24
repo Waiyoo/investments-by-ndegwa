@@ -323,10 +323,10 @@ export default function Footer() {
                       Advisory Line
                     </span>
                     <a
-                      href="tel:+254799357038"
+                      href="tel:+254 724 535 062"
                       className="foot-serif text-lg text-white/90 hover:text-[#C9A46A] transition-colors duration-300 block"
                     >
-                      +254 799 357 038
+                      +254 724 535 062
                     </a>
                     <span className="block foot-mono text-[0.65rem] text-white/35 mt-1">
                       Mon–Fri · 08:00–18:00 EAT

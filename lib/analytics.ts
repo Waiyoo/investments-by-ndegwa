@@ -18,7 +18,7 @@ export async function trackinvestmentEvent(
     const ipHash = crypto
       .createHmac(
         'sha256',
-        process.env.IP_HASH_SECRET || 'ndegwa-investments-salt'
+        process.env.IP_HASH_SECRET || 'py-capital-salt'
       )
       .update(ip)
       .digest('hex')

@@ -46,7 +46,7 @@ The platform encompasses a public-facing web application for discovery and inqui
 - **FR-SRCH-02:** Users shall be able to perform keyword searches across investment titles and summaries.
 
 #### 6.4 Inquiry Requirements
-- **FR-INQ-01:** Users shall be able to submit inquiries providing name, email, phone number (`+254 799 357 038`), intended investment amount, and message.
+- **FR-INQ-01:** Users shall be able to submit inquiries providing name, email, phone number (`+254 724 535 062`), intended investment amount, and message.
 - **FR-INQ-02:** Inquiries must be validated on both client and server sides before persistence.
 
 #### 6.5 Email Requirements
@@ -108,7 +108,7 @@ This system explicitly **DOES NOT**:
 
 ### 10. Company Information
 - **Company Name:** PY Capital
-- **Contact Numbers:** 0799357038, +254 799 357 038
+- **Contact Numbers:** 0724535062, +254 724 535 062
 - **Location:** Nairobi, Kenya
 - **Currency:** KSh
 - **Company Email:** None supplied (intentionally omitted; not invented).

@@ -1,4 +1,5 @@
 // app/contact/page.tsx
+import ContactForm from './ContactForm'
 import Link from 'next/link'
 import Footer from '@/components/public/footer'
 import {
@@ -181,7 +182,7 @@ export default function ContactPage() {
               {/* Contact chips — mono labels */}
               <div className="flex flex-wrap gap-0 anim-fade-up d-5">
                 {[
-                  { icon: Phone, label: '+254 799 357 038' },
+                  { icon: Phone, label: '+254 724 535 062' },
                   { icon: MapPin, label: 'Nairobi · Kenya' },
                   { icon: Clock, label: 'Mon–Fri · 8am–6pm EAT' },
                 ].map((chip, i) => (
@@ -313,16 +314,16 @@ export default function ContactPage() {
                   <div>
                     <span className="label-inst-sm text-[#1F1A15]/45 block mb-2">Direct Phone</span>
                     <a
-                      href="tel:+254799357038"
+                      href="tel:+254724535062"
                       className="block text-[0.95rem] text-[#1F1A15]/85 hover:text-[#A8763E] transition-colors font-medium"
                     >
-                      +254 799 357 038
+                      +254 724 535 062
                     </a>
                     <a
-                      href="tel:+254799357038"
+                      href="tel:+254724535062"
                       className="block text-xs font-mono text-[#1F1A15]/45 hover:text-[#A8763E] transition-colors mt-1"
                     >
-                      0799357038
+                      0724535062
                     </a>
                   </div>
                 </div>
@@ -344,7 +345,7 @@ export default function ContactPage() {
 
               {/* Call CTA */}
               <a
-                href="tel:+254799357038"
+                href="tel:+254724535062"
                 className="group/cta flex items-center justify-between gap-6 bg-[#A8763E] hover:bg-[#1F1A15] text-white label-inst px-6 py-5 mt-8 transition-colors duration-500"
               >
                 <span className="flex items-center gap-3">
@@ -376,7 +377,7 @@ export default function ContactPage() {
               </h3>
 
               <p className="text-[0.95rem] leading-[1.85] text-[#1F1A15]/65 mb-6">
-                PY Capital does not maintain a general public email address at this time. All inquiries should be directed via phone or through specific investment inquiry forms on our platform.
+                PY Capital does not publish a general public email address. All inquiries are routed privately through our secure contact form or via our direct phone line.
               </p>
 
               {/* Warning box — institutional alert */}
@@ -413,7 +414,82 @@ export default function ContactPage() {
       </section>
 
       {/* =========================================================================
-          4. COMMUNICATION GUIDELINES — DARK INSTITUTIONAL
+          4. INQUIRY FORM — SEND MESSAGE (EMAIL / WHATSAPP)
+          ========================================================================= */}
+      <section className="relative bg-[#F1EBE1] py-24 lg:py-32 border-b border-[var(--line)] overflow-hidden">
+
+        {/* Ghosted backdrop */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.04] img-inst anim-slow-pan"
+          />
+        </div>
+
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10">
+
+          {/* Header */}
+          <div className="grid grid-cols-12 gap-8 mb-16 items-end">
+            <div className="col-span-12 lg:col-span-3">
+              <span className="label-inst text-[#1F1A15]/45 block mb-4">02 — Send a Message</span>
+              <span className="w-10 h-px bg-[#A8763E] block" />
+            </div>
+            <div className="col-span-12 lg:col-span-9">
+              <h2 className="font-serif font-light text-[2rem] sm:text-[3rem] lg:text-[3.75rem] leading-[1.05] tracking-[-0.02em] text-[#1F1A15] max-w-[26ch] anim-fade-up">
+                Tell us what you <em className="italic font-normal text-[#A8763E]">need</em>.
+              </h2>
+            </div>
+          </div>
+
+          {/* Two-column: reassurance left, form right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+
+            {/* Left — reassurance column */}
+            <div className="lg:col-span-4 flex flex-col gap-8 anim-fade-up">
+              <p className="text-[0.95rem] leading-[1.85] text-[#1F1A15]/65">
+                Submit your inquiry below. Messages are routed privately to our internal
+                review team — we do not publish a general email address.
+              </p>
+
+              <div className="flex flex-col border-t border-[var(--line)]">
+                {[
+                  'Response within 24 hours',
+                  'Routed to a named advisor',
+                  'No upfront payment requested',
+                  'Sent via secure channels',
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-4 py-4 border-b border-[var(--line)]"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-[#A8763E] flex-shrink-0" strokeWidth={1.5} />
+                    <span className="text-sm text-[#1F1A15]/75">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Inline note */}
+              <div className="border-l-2 border-[#A8763E] bg-[#A8763E]/[0.06] px-5 py-4">
+                <div className="flex items-start gap-3">
+                  <Lock className="w-4 h-4 text-[#A8763E] flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <span className="text-[0.85rem] leading-[1.7] text-[#1F1A15]/80 font-medium">
+                    Your details are used only to respond to your inquiry. Nothing is shared externally.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right — the actual form */}
+            <div className="lg:col-span-8">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          5. COMMUNICATION GUIDELINES — DARK INSTITUTIONAL
           ========================================================================= */}
       <section className="relative bg-[#231C16] text-white border-b border-white/10 overflow-hidden">
 
@@ -431,7 +507,7 @@ export default function ContactPage() {
           {/* Header */}
           <div className="grid grid-cols-12 gap-8 mb-20 items-end">
             <div className="col-span-12 lg:col-span-3">
-              <span className="label-inst text-white/45 block mb-4">02 — Guidelines</span>
+              <span className="label-inst text-white/45 block mb-4">03 — Guidelines</span>
               <span className="w-10 h-px bg-[#A8763E] block" />
             </div>
             <div className="col-span-12 lg:col-span-9">
@@ -454,13 +530,13 @@ export default function ContactPage() {
                 icon: Lock,
                 num: '02',
                 title: 'Secure inquiry forms',
-                desc: 'Investment-specific inquiries are submitted through verified platform forms that route directly to our internal review team.',
+                desc: 'Investment-specific inquiries are submitted through verified platform forms that route privately to our internal review team.',
               },
               {
                 icon: Globe,
                 num: '03',
                 title: 'No public email',
-                desc: 'We do not publish a general email address. This protects both our investors and our team from unverified and impersonation-based outreach.',
+                desc: 'We do not publish a general email address. Messages submitted through our form are routed privately — protecting both investors and our team from impersonation-based outreach.',
               },
             ].map((item, idx) => (
               <article
@@ -493,7 +569,7 @@ export default function ContactPage() {
       </section>
 
       {/* =========================================================================
-          5. LOCATION BLOCK — FULL-BLEED EDITORIAL
+          6. LOCATION BLOCK — FULL-BLEED EDITORIAL
           ========================================================================= */}
       <section className="relative bg-[#F1EBE1] border-b border-[var(--line)] overflow-hidden">
 
@@ -511,7 +587,7 @@ export default function ContactPage() {
           {/* Header */}
           <div className="grid grid-cols-12 gap-8 mb-16 items-end">
             <div className="col-span-12 lg:col-span-3">
-              <span className="label-inst text-[#1F1A15]/45 block mb-4">03 — Location</span>
+              <span className="label-inst text-[#1F1A15]/45 block mb-4">04 — Location</span>
               <span className="w-10 h-px bg-[#A8763E] block" />
             </div>
             <div className="col-span-12 lg:col-span-9">
@@ -573,7 +649,7 @@ export default function ContactPage() {
       </section>
 
       {/* =========================================================================
-          6. CTA — FINAL CONVERSION
+          7. CTA — FINAL CONVERSION
           ========================================================================= */}
       <section className="relative bg-[#231C16] text-white overflow-hidden">
 
@@ -593,7 +669,7 @@ export default function ContactPage() {
             {/* Left — headline */}
             <div className="col-span-12 lg:col-span-7">
               <div className="flex items-center gap-4 mb-10 anim-fade-up">
-                <span className="label-inst text-white/45">04 — Next Steps</span>
+                <span className="label-inst text-white/45">05 — Next Steps</span>
                 <span className="w-10 h-px bg-[#A8763E]" />
               </div>
 
@@ -632,7 +708,7 @@ export default function ContactPage() {
       </section>
 
       {/* =========================================================================
-          7. FOOTER — SHARED COMPONENT
+          8. FOOTER — SHARED COMPONENT
           ========================================================================= */}
       <Footer />
 

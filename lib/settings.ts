@@ -3,8 +3,8 @@ import { db } from "@/lib/db";
 const DEFAULT_SETTINGS = {
   id: "default-site-settings",
   companyName: "PY Capital",
-  phone: "0799357038",
-  internationalPhone: "+254 799 357 038",
+  phone: "0724535062",
+  internationalPhone: "+254 724 535 062",
   location: "Nairobi, Kenya",
   companyEmail: "",
   currency: "KSh",

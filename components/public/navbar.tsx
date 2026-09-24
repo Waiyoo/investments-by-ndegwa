@@ -241,10 +241,10 @@ export default function Navbar() {
               <div className="flex items-center justify-between mt-6 pt-5 border-t border-[rgba(14,14,14,0.10)]">
                 <span className="nav-label-sm text-[#0E0E0E]/45">Advisory Line</span>
                 <a
-                  href="tel:+254799357038"
+                  href="tel:+254 724 535 062"
                   className="nav-mono text-xs text-[#0E0E0E]/80 hover:text-[#B01E28] transition-colors"
                 >
-                  +254 799 357 038
+                  +254 724 535 062
                 </a>
               </div>
 

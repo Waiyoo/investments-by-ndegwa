@@ -173,8 +173,8 @@ model InvestmentInquiry {
 model SiteSettings {
   id                 String   @id @default(uuid())
   companyName        String   @default("PY Capital")
-  phone              String   @default("0799357038")
-  internationalPhone String   @default("+254 799 357 038")
+  phone              String   @default("0724535062")
+  internationalPhone String   @default("+254 724 535 062")
   location           String   @default("Nairobi, Kenya")
   companyEmail       String?
   currency           String   @default("KSh")

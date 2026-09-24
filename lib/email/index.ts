@@ -34,7 +34,7 @@ export async function sendInquiryNotificationEmails(
     <p><strong>${escapeHtml(data.investmentTitle)}</strong></p>
     <p><strong>Amount of interest:</strong> ${escapeHtml(amount)}</p>
     <p>Our team will review your inquiry and contact you shortly.</p>
-    <p>Regards,<br>PY Capital<br>+254 799 357 038<br>Nairobi, Kenya</p>
+    <p>Regards,<br>PY Capital<br>+254 724 535 062<br>Nairobi, Kenya</p>
   `
 
   const adminHtml = `

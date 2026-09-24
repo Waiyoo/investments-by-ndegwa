@@ -107,7 +107,7 @@ export default function AdminDashboardPage() {
         <div className="px-6 py-6 border-b border-white/10">
           <Link href="/" className="flex items-baseline gap-3">
             <span className="font-serif text-[1.6rem] font-medium tracking-tight text-white">
-              Ndegwa
+              PY Capital
             </span>
             <span className="label-inst-sm text-white/50">
               Admin
@@ -214,7 +214,7 @@ export default function AdminDashboardPage() {
                 <Menu className="w-4 h-4" strokeWidth={1.5} />
               </button>
               <span className="font-serif text-xl font-medium text-[#1F1A15]">
-                Ndegwa
+                PY Capital
               </span>
             </div>
 
