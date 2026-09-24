@@ -20,7 +20,7 @@ import {
   Briefcase,
 } from 'lucide-react'
 
-export const revalidate = 60 // Revalidate cache every 60 seconds
+export const dynamic = 'force-dynamic' // Revalidate cache every 60 seconds
 
 export default async function HomePage() {
   // Fetch featured published investments
